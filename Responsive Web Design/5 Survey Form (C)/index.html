@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>freeCodeCamp Survey Form</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header>
+    <h1 id="title">freeCodeCamp Survey Form</h1>
+    <p id="description">Thank you for taking the time to help us improve the platform</p>
+    <br>
+    </header>
+  <form id="survey-form">
+    <div class="form-group">
+      <label for="name" id="name-label">
+        Name
+        <input id="name" type="text" placeholder="Enter your name" required/>
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="email" id="email-label">
+        Email
+        <input id="email" type="email" placeholder="Enter your Email" required/>
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label for="age" id="number-label">
+        Age (optional)
+        <input id="number" type="number" placeholder="Age" min="13" max="120"/>
+      </label>
+    </div>
+
+    <div class="form-group">
+      Which option best describes your current role?
+      <label for="dropdown">
+        <select id="dropdown">
+          <option value="1">select current role</option>
+          <option value="2">Student</option>
+          <option value="3">Full time Job</option>
+        </select>
+      </label>
+   </div>
+
+   <div class="form-group">
+    Would you recommend freeCodeCamp to a friend?
+    <label for="definitely"><input type="radio" name="recommend" id="definitely" value="definitely" class="inline" checked>Definitely</label>
+    <label for="maybe"><input type="radio" name="recommend" id="maybe" value="maybe" class="inline">Maybe</label>
+    <label for="notSure"><input type="radio" name="recommend" id="notSure" value="notSure" class="inline">Not sure</label>
+  </div>
+
+  <div class="form-group">
+    Would you recommend freeCodeCamp to a friend?
+    <label for="front">
+      <input type="checkbox" name="improve" value="front" id="front" class="inline">Front-end Projects
+    </label>
+    <label for="back">
+      <input type="checkbox" name="improve" value="back"  id="back" class="inline">Back-end Projects
+     </label>
+     <label for="data">
+      <input type="checkbox" name="improve" value="data" id="data" class="inline">Data Visualization
+    </label>
+  </div>
+
+  <div class="form-group">
+    <label for="comment">Any comments or suggestions?
+    <textarea id="comment" placeholder="Enter your comment here..." rows="3" cols="50"></textarea>
+    </label>
+  </div>
+
+  <div class="form-group">
+    <input type="submit" id="submit">
+  </div>
+  </form>
+  </body>
+</html>

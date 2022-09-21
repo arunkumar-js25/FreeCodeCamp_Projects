@@ -1,0 +1,21 @@
+body{
+  display: block;
+  width: 80%;
+  justify-content: center;
+  padding: 30px auto;
+}
+
+main{
+  text-align: center;
+}
+
+#image{
+  max-width: 100%;
+  height: auto;
+  text-align: center;
+}
+
+img {
+  display:block;
+  padding:10px auto;
+}

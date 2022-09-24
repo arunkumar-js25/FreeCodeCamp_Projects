@@ -1,5 +1,4 @@
 # FreeCodeCamp_Projects
-Certification Projects
 
 ## Certifications:
 1. Responsive Web Design Certification

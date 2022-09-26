@@ -1,0 +1,37 @@
+Basic javascript Problems: 113
+
+ES6 : 29
+
+constructor
+	
+
+module
+	<script type="module" src="filename.js"></script>
+
+Export
+	const add = (a,b) => a+b;
+	export { add };
+	export { add,substract };
+	export default function add(x, y) {  return x + y; }
+
+Import
+	import add from "./functions.js";
+	import * as func from "./functions.js";
+
+promise
+	const myPromise = new Promise((resolve, reject) => {
+		if(condition here) {
+			resolve("Promise was fulfilled");
+		} else {
+			reject("Promise was rejected");
+		}
+	});
+	myPromise.then(result => {});
+	myPromise.catch(error => {});
+
+Regex: 33
+
+.test() method -->  
+	"/searchWord/".test(sentence)    
+	regex /Kevin/ will not match kevin or KEVIN
+	OR Operator: /yes|no|maybe/

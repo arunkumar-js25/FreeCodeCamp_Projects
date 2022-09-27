@@ -80,11 +80,76 @@ promise
 /******************************************************/
 Regex: 33
 
-.test() method -->   if a pattern exists or not within a string
-	Syntax:				"/searchWord/".test(sentence)    
-	case-sensitive: 	regex /Kevin/ will not match kevin or KEVIN
-	ignore case:		/kevin/i
-	OR Operator: 		/yes|no|maybe/
-	
-.match() method -->  You can also extract the actual matches you found //Returns first Match
-	Syntax:				'string'.match(/regex/);   //NOTE: opposite of test() method  
+	.test() method -->   if a pattern exists or not within a string   --> returns true/false
+		Syntax:				/searchWord/.test(sentence)    
+		case-sensitive: 	regex /Kevin/ will not match kevin or KEVIN
+		ignore case:		/kevin/i
+		OR Operator: 		/yes|no|maybe/
+		
+	.match() method -->  You can also extract the actual matches you found  --> returns first occurence by default 
+							output: [ 'brown',  index: 10,  input: 'The quick brown fox jumps over the lazy dog.',  groups: undefined ]
+			
+		Syntax:				'string'.match(/regex/);   //NOTE: opposite of test() method
+		global search:		'string'.match(/regex/gi); //returns all occurences in array --> output: [ 'brown', 'Brown' ]
+		 
+	WildCard characters:
+		. 		--> one character
+		+ 		--> multiple characters >= 1
+		* 		--> multiple characters >= 0
+		? 		--> turns greedy match to lazy match
+		^ 		--> beginning of strings MOTE: [^] is neglected character set if it is used inside bracket 
+		$ 		--> end of strings
+		{2,5}	--> quantity specifiers: You can specify the lower and upper number of patterns  
+					/ you can give without upper limit too as {2,}
+					/ Specify Exact Number of Matches {2}
+		()		--> grouping
+		(?=...)	--> Lookahead (positive)
+		(?!...)	-> Lookahead (negative)
+		
+	Expressions:
+		/[aeiou}/gi 	--> search any one of the character in it
+		/[a-z]/gi 		--> returns all alpha characters
+		/[a-z0-9]/gi 	--> returns all alphanumeric characters
+		/[^aeiou]/gi	--> the negated character set only excludes the vowel characters.
+		/s+/gi			--> find matches when the letter s occurs one or more times
+		/Aa*/gi			--> find matches when the letter A and a* occurs zero or more times
+		/t[a-z]*i/		--> greedy match - return matching long possible characters
+		/t[a-z]*?i/		--> lazy match	- return matching short possible characters
+		/[A-Za-z0-9_]/g	--> Match All Letters and Numbers (longhand)
+		/\w/g			--> Match All Letters and Numbers (shorthand)   \w = [A-Za-z0-9_]
+		/\W/g			--> Neglect All matching Letters and Numbers	\W = [^A-Za-z0-9_]
+		/\d/g			--> Match all digits							\d = [0-9]
+		/\D/g			--> Match all Non-digits						\D = [^0-9]
+		\s				--> whitespaces
+		\S				--> Non-whitespaces
+		/favou?rite/	--> Check for All or None (like optional)
+		/^(/d+) \1 \1$/	--> Capture Groups  // captures exactly 3 values '42 42 42'
+		
+	Use Capture Groups to Search and Replace
+		"Code Camp".replace(/(\w+)\s(\w+)/, '$2 $1');  //$ symbol to capture groups
+		
+		Example:
+		let str = "one two three";
+		let fixRegex = /^(\w+)\s(\w+)\s(\w+)$/; // Change this line
+		let replaceText = "$3 $2 $1"; // Change this line
+		let result = str.replace(fixRegex, replaceText);
+		
+	Restrict Possible Usernames
+		/^[a-z]([a-z]+\d*|[0-9]{2,})$/gi;
+
+		Usernames can only use alpha-numeric characters.
+		The only numbers in the username have to be at the end. There can be zero or more of them at the end. Username cannot start with the number.
+		Username letters can be lowercase and uppercase.
+		Usernames have to be at least two characters long. A two-character username can only use alphabet letters as characters.	
+		
+		
+/******************************************************/
+Debugging: 12
+
+console.log();
+console.clear();
+console.log(typeof "");  //the console will display the strings string "", number 1, object [], and object {}.
+
+/******************************************************/
+Basic Data Structures: 20
+

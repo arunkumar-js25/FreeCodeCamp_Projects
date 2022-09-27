@@ -1,9 +1,57 @@
 Basic javascript Problems: 113
 
+
+/******************************************************/
 ES6 : 29
+
+Spread operator:
+	ES6 introduces the spread operator, which allows us to expand arrays and other expressions in places where multiple parameters or elements are expected.
+	
+	apply() method
+		var arr = [6, 89, 3, 45];
+		var maximus = Math.max.apply(null, arr);  (OR)  
+		
+	Evaluate Arrays In-Place:
+		const maximus = Math.max(...arr);
+		function howMany(...args) {  return args.length; }
+		
+	NOTE: The rest parameter eliminates the need to check the args array and allows us to apply map(), filter() and reduce() on the parameters array.
+	
+Destructuring Assignment:
+	Destructuring assignment is special syntax introduced in ES6, for neatly assigning values taken directly from an object.
+	
+	Object:
+		const user = { name: 'John Doe', age: 34 };
+		const { name, age } = user;
+	
+	Function Parameter: 
+		const profileUpdate = (profileData) => {  const { name, age, nationality, location } = profileData; }
+		const profileUpdate = ({ name, age, nationality, location }) => { }
+		
+	Nested Objects: 
+		const { johnDoe: { age: userAge, email: userEmail }} = user;
+	Array: 
+		const [a, b, ...c] = [1, 2, 3, 4, 5, 6];
+	
+	
+String Interpolation:
+	const greeting = `Hello, my name is ${person.name}! I am ${person.age} years old.`;
 
 constructor
 	
+	class Book {   //It should be noted that the class syntax is just syntax, and not a full-fledged class-based implementation of an Oops
+	  constructor(author) {
+		this._author = author;
+	  }
+	  // getter
+	  get writer() {
+		return this._author;
+	  }
+	  // setter
+	  set writer(updatedAuthor) {
+		this._author = updatedAuthor;
+	  }
+	}
 
 module
 	<script type="module" src="filename.js"></script>
@@ -12,7 +60,7 @@ Export
 	const add = (a,b) => a+b;
 	export { add };
 	export { add,substract };
-	export default function add(x, y) {  return x + y; }
+	export default function add(x, y) {  return x + y; }   //It is also used to create a fallback value for a file or module.
 
 Import
 	import add from "./functions.js";
@@ -29,9 +77,14 @@ promise
 	myPromise.then(result => {});
 	myPromise.catch(error => {});
 
+/******************************************************/
 Regex: 33
 
-.test() method -->  
-	"/searchWord/".test(sentence)    
-	regex /Kevin/ will not match kevin or KEVIN
-	OR Operator: /yes|no|maybe/
+.test() method -->   if a pattern exists or not within a string
+	Syntax:				"/searchWord/".test(sentence)    
+	case-sensitive: 	regex /Kevin/ will not match kevin or KEVIN
+	ignore case:		/kevin/i
+	OR Operator: 		/yes|no|maybe/
+	
+.match() method -->  You can also extract the actual matches you found //Returns first Match
+	Syntax:				'string'.match(/regex/);   //NOTE: opposite of test() method  

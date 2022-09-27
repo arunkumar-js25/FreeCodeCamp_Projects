@@ -1,3 +1,4 @@
+/* palindrome("eye"); */
 function palindrome(str) {
   const replaced = str.replace(/[^a-z0-9]/gi, '').toLowerCase();
   let len = replaced.length;
@@ -13,4 +14,4 @@ function palindrome(str) {
   return true;
 }
 
-palindrome("eye");
+export { palindrome };

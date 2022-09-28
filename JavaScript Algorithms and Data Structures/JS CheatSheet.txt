@@ -351,3 +351,16 @@ function telephoneCheck(str) {
   let regEx = /^(\d{3}-|\u0028\d{3}\u0029|1\s\d{3}-|1(\s\u0028\d{3}\u0029\s|\s\d{3}\s|\u0028\d{3}\u0029|\d{3}))\d{3}[-\s]\d{4}$|^\d{10}$/;
   return regEx.test(str);
 }
+
+/*****************************************/
+OOPS: 26
+
+let Bird = function(name, color) {   //constructor declaration (2 parameters and 1 property)
+  this.name = name;
+  this.color = color;
+  this.numLegs = 2;
+}
+
+let crow = new Bird("Alexis", "black"); 
+
+crow instanceof Bird; //return true

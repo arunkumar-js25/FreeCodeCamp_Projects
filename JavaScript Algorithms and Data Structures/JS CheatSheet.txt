@@ -355,12 +355,221 @@ function telephoneCheck(str) {
 /*****************************************/
 OOPS: 26
 
-let Bird = function(name, color) {   //constructor declaration (2 parameters and 1 property)
+#constructor declaration (sample with 2 parameters and 1 property)
+let Bird = function(name, color) {   
   this.name = name;
   this.color = color;
   this.numLegs = 2;
 }
-
 let crow = new Bird("Alexis", "black"); 
 
+Instance Create:
+1. create an instance of Animal using the new operator:   //There are some disadvantages when using this syntax for inheritance, which are too complex for the scope of this challenge.
+		let animal = new Animal();
+
+2. let animal = Object.create(Animal.prototype);
+		
+#check the constructor is same or not - instanceOf
 crow instanceof Bird; //return true
+
+#Use Prototype Properties to Reduce Duplicate Code - Now all instances of Bird have the numLegs property.
+Bird.prototype.numLegs = 2;
+console.log(duck.numLegs);
+console.log(canary.numLegs);
+
+Two kinds of properties: own properties and prototype properties. Own properties are defined directly on the object instance itself. And prototype properties are defined on the prototype.
+
+function Bird(name) {
+  this.name = name;  //own property
+}
+
+Bird.prototype.numLegs = 2; // prototype property
+
+let duck = new Bird("Donald");
+
+let ownProps = [];
+let prototypeProps = [];
+
+for (let property in duck) {
+  if(duck.hasOwnProperty(property)) {
+    ownProps.push(property); 		//Own property
+  } else {
+    prototypeProps.push(property);  //Prototype property
+  }
+}
+
+console.log(ownProps);
+console.log(prototypeProps);
+
+#Adding functions using prototype
+Bird.prototype = {
+  constructor: Bird,  //There is one crucial side effect of manually setting the prototype to a new object. It erases the constructor property!
+  numLegs: 2,
+  eat: function() {
+    console.log("nom nom nom");
+  },
+  describe: function() {
+    console.log("My name is " + this.name); 
+  }
+};
+
+#Understand Where an Object’s Prototype Comes From
+Bird.prototype.isPrototypeOf(duck);
+
+#Understand the Prototype Chain
+The hasOwnProperty method is defined in Object.prototype, which can be accessed by Bird.prototype, which can then be accessed by duck.
+Object.prototype.isPrototypeOf(Dog.prototype);
+
+#Use Inheritance So You Don't Repeat Yourself
+There's a principle in programming called Don't Repeat Yourself (DRY). 
+
+
+#Inherit Behaviors from a Supertype
+let bird = Object.create(Animal.prototype); 
+
+#Use a Mixin to Add Common Behavior Between Unrelated Objects
+let flyMixin = function(obj) {
+  obj.fly = function() {
+    console.log("Flying, wooosh!");
+  }
+};
+flyMixin(bird);
+flyMixin(plane);
+bird.fly();
+plane.fly();
+
+#Private Variable in constructor
+function Bird() {
+  let weight = 15;
+
+  this.getWeight = function(){
+    return weight;
+  }
+
+}
+
+#Understand the Immediately Invoked Function Expression (IIFE)
+	A common pattern in JavaScript is to execute a function as soon as it is declared:
+
+			(function () {
+			  console.log("Chirp, chirp!");
+			})();
+	This is an anonymous function expression that executes right away, and outputs Chirp, chirp! immediately.
+
+	Note that the function has no name and is not stored in a variable. The two parentheses () at the end of the function expression cause it to be immediately executed or invoked. This pattern is known as an immediately invoked function expression or IIFE.
+
+#Use an IIFE to Create a Module
+	An immediately invoked function expression (IIFE) is often used to group related functionality into a single object or module. For example, an earlier challenge defined two mixins:
+
+			function glideMixin(obj) {
+			  obj.glide = function() {
+				console.log("Gliding on the water");
+			  };
+			}
+			function flyMixin(obj) {
+			  obj.fly = function() {
+				console.log("Flying, wooosh!");
+			  };
+			}
+	We can group these mixins into a module as follows:
+
+			let motionModule = (function () {
+			  return {
+				glideMixin: function(obj) {
+				  obj.glide = function() {
+					console.log("Gliding on the water");
+				  };
+				},
+				flyMixin: function(obj) {
+				  obj.fly = function() {
+					console.log("Flying, wooosh!");
+				  };
+				}
+			  }
+			})();
+	Note that you have an immediately invoked function expression (IIFE) that returns an object motionModule. This returned object contains all of the mixin behaviors as properties of the object. The advantage of the module pattern is that all of the motion behaviors can be packaged into a single object that can then be used by other parts of your code. Here is an example using it:
+
+		motionModule.glideMixin(duck);
+		duck.glide();
+
+/********************************************* SUMMARY of OOPS: ***************************************************/
+function Animal() { }								//create parent constructor
+Animal.prototype = {  constructor: Animal, };		//NOTE: use ',' instead of ';'
+
+function Dog(name) { this.name = name}				//Create Constructor
+Dog.prototype = Object.create(Animal.prototype);	//create prototype (this will erase the constructor property
+Dog.prototype.constructor = Dog;					//Reset the inherited constructor property
+Dog.prototype.bark = function() { return "Woof!" };	//New method to child / Override Inherited Methods
+let beagle = new Dog();								//initialization
+
+
+/*****************************************/
+Functional Programming: 24
+
+Functional programming is a style of programming where solutions are simple, isolated functions, without any side effects outside of the function scope: INPUT -> PROCESS -> OUTPUT
+Callbacks are the functions that are slipped or passed into another function to decide the invocation of that function. 
+
+Functions that can be assigned to a variable, passed into another function, or returned from another function just like any other normal value, are called first class functions. 
+In JavaScript, all functions are first class functions.
+
+The functions that take a function as an argument, or return a function as a return value, are called higher order functions.
+When functions are passed in to or returned from another function, then those functions which were passed in or returned can be called a lambda.
+
+
+Use Higher-Order Functions map, filter, or reduce to Solve a Complex Problem
+
+NOTE:
+The reduce method allows for more general forms of array processing, and it's possible to show that both filter and map can be derived as special applications of reduce. The reduce method iterates over each item in an array and returns a single value (i.e. string, number, object, array). This is achieved via a callback function that is called on each iteration.
+
+The callback function accepts four arguments. The first argument is known as the accumulator, which gets assigned the return value of the callback function from the previous iteration, the second is the current element being processed, the third is the index of that element and the fourth is the array upon which reduce is called.
+
+In addition to the callback function, reduce has an additional parameter which takes an initial value for the accumulator. If this second parameter is not used, then the first iteration is skipped and the second iteration gets passed the first element of the array as the accumulator.
+
+
+#Sorting
+function ascendingOrder(arr) {
+	  return arr.sort(function(a, b) {
+		return a - b;
+	  });
+}
+
+Asc Order sort for characters
+	arr.sort(function(a, b) {
+		return a === b ? 0 : a > b ? 1 : -1;
+	  });
+
+Desc Order sort for characters
+function reverseAlpha(arr) {
+	  return arr.sort(function(a, b) {
+		return a === b ? 0 : a < b ? 1 : -1;
+	  });
+}
+
+Useful Array Methods:
+	every()
+	some()
+	
+The arity of a function is the number of arguments it requires. Currying a function means to convert a function of N arity into N functions of arity 1.
+In other words, it restructures a function so it takes one argument, then returns another function that takes the next argument, and so on.
+		function unCurried(x, y) {
+		  return x + y;
+		}
+
+		function curried(x) {
+		  return function(y) {
+			return x + y;
+		  }
+		}
+
+		const curried = x => y => x + y
+		
+curried(1)(2) would return 3
+
+Similarly, partial application can be described as applying a few arguments to a function at a time and returning another function that is applied to more arguments. Here's an example:
+
+	function impartial(x, y, z) {
+	  return x + y + z;
+	}
+
+	const partialFn = impartial.bind(this, 1, 2);
+partialFn(10); // 13

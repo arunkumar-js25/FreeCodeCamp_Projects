@@ -1,0 +1,21 @@
+function steamrollArray(arr) {
+  let res = [];
+
+  if(arr.length == 0){
+    return [];
+  }
+  
+  for(let i=0;i<arr.length;i++){
+    console.log(typeof(arr[i]));
+    if(Array.isArray(arr[i])){
+        res.push(...steamrollArray(arr[i]));
+    }
+    else{
+      res.push(arr[i]);
+    }
+  }
+  return res;
+  //return res.push(steamrollArray(arr.slice(pos)));
+}
+
+steamrollArray([1, [2], [3, [[4]]]]);

@@ -1,0 +1,23 @@
+function sumPrimes(num) {
+  let prime=[];
+  let sumPrime=0;
+  for(let i=2;i<=num;i++)
+  {
+      let flag=true;
+      for(let j=0;j<prime.length;j++){
+        if(i%prime[j] == 0){
+          flag = false;
+        }
+      }
+
+      if(flag){
+        console.log(i);  
+        prime.push(i);
+        sumPrime+=i;
+      }
+      
+  }
+  return sumPrime;
+}
+
+sumPrimes(977);

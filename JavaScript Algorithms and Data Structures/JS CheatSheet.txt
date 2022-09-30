@@ -572,3 +572,18 @@ Similarly, partial application can be described as applying a few arguments to a
 
 	const partialFn = impartial.bind(this, 1, 2);
 partialFn(10); // 13
+
+
+/*****************************************/
+Intermediate Algorithms Tips: 21
+
+const [min, max] = arr.sort((a, b) => a - b); //sort min and max values
+
+const range = Array(max - min + 1).fill(0).map((_, i) => i + min);  //Create range of values
+
+Array.IsArray() //check object is array or not
+
+arr.findIndex(func) //returns the first index which satisfies the func
+
+parseInt(1010,2) //convert binary into int
+String.fromCharCode(_)  //get ASCII character

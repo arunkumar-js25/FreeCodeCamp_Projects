@@ -1,0 +1,180 @@
+React is an Open Source view library created and maintained by Facebook. It's a great tool to render the User Interface (UI) of modern web applications.
+React uses a syntax extension of JavaScript called JSX that allows you to write HTML directly within JavaScript.
+
+However, because JSX is not valid JavaScript, JSX code must be compiled into JavaScript. The transpiler Babel is a popular tool for this process.
+
+It's worth noting that under the hood the challenges are calling ReactDOM.render(JSX, document.getElementById('root')). This function call is what places your JSX into React's own lightweight representation of the DOM. React then uses snapshots of its own DOM to optimize updating only specific parts of the actual DOM.
+
+One important thing to know about nested JSX is that it must return a single element and () -> optional in declaring JSX element
+
+Declaring JSX const:
+const JSX = (
+  <div>
+    <h1>This is a block of JSX</h1>
+    <p>Here's a subtitle</p>
+  </div>
+);
+
+Add Comments in JSX:	{/* */}
+
+
+So far, you've learned that JSX is a convenient tool to write readable HTML within JavaScript. With React, we can render this JSX directly to the HTML DOM using React's rendering API known as ReactDOM.
+
+ReactDOM offers a simple method to render React elements to the DOM which looks like this: 
+	ReactDOM.render(componentToRender, targetNode), 
+where the first argument is the React element or component that you want to render, and the second argument is the DOM node that you want to render the component to.
+
+const JSX = (
+  <div>
+    <h1>Hello World</h1>
+    <p>Lets render this to the DOM</p>
+  </div>
+);
+// Change code below this line
+ReactDOM.render(JSX,document.getElementById("challenge-node"));
+
+HTML VS JSX
+One key difference in JSX is that you can no longer use the word class to define HTML classes. This is because class is a reserved word in JavaScript. Instead, JSX uses className.
+Another important way in which JSX differs from HTML is in the idea of the self-closing tag.
+	HTML -> <div></div>
+	JSX -> <div /> or <div></div>  //Any JSX element can be written with a self-closing tag, and every element must be closed
+	
+	HTML -> <br> or as <br />
+	JSX -> <br /> // in order to be valid JSX that can be transpiled
+	
+	
+Create a Stateless Functional Component:
+	Components are the core of React. Everything in React is a component
+	There are two ways to create a React component. 
+		The first way is to use a JavaScript function. Defining a component in this way creates a stateless functional component
+			To create a component with a function, you simply write a JavaScript function that returns either JSX or null
+				const MyComponent = function() {
+				  // Change code below this line
+				  return (
+					<div className="Test">Some Text</div>
+				  );
+				  // Change code above this line
+				}
+				
+				using Arrow function:
+					const TypesOfFruit = () => {
+					  return (
+						<div>
+						  <h2>Fruits:</h2>
+						  <ul>
+							<li>Apples</li>
+							<li>Blueberries</li>
+							<li>Strawberries</li>
+							<li>Bananas</li>
+						  </ul>
+						</div>
+					  );
+					};
+				
+		The other way to define a React component is with the ES6 class syntax
+			class Kitten extends React.Component {  //Kitten class now has access to many useful React features, such as local state and lifecycle hooks.
+			  constructor(props) {
+				super(props);
+			  }
+
+			  render() {
+				return (
+				  <h1>Hi</h1>
+				);
+			  }
+			}
+	
+	Because a JSX component represents HTML, you could put several components together to create a more complex HTML page. This is one of the key advantages of the component architecture React provides. It allows you to compose your UI from many separate, isolated components. This makes it easier to build and maintain complex user interfaces.
+
+Create a Component with Composition
+When React encounters a custom HTML tag that references another component (a component name wrapped in < />
+	return (
+	 <App>
+	  <Navbar />
+	  <Dashboard />
+	  <Footer />
+	 </App>
+	)
+	
+Component composition is one of React's powerful features. When you work with React, it is important to start thinking about your user interface in terms of components
+You can render JSX elements, stateless functional components, and ES6 class components within other components.
+
+Render a Class Component to the DOM: ReactDOM.render(<ComponentToRender />, targetNode)
+
+
+
+
+Write a React Component from Scratch
+
+		class MyComponent extends React.Component{
+		  constructor(props){
+			super(props);
+		  }
+		  render(){
+			return (
+			  <div>
+				<h1>My First React Component!</h1>
+			  </div>
+			);
+		  }
+		}
+
+		ReactDOM.render(<MyComponent/>,document.getElementById("challenge-node"));
+		
+Props:
+	simple props (JSX):
+		const CurrentDate = (props) => {
+		  return (
+			<div>
+			  { /* Change code below this line */ }
+			  <p>The current date is: {props.date}</p>
+			  { /* Change code above this line */ }
+			</div>
+		  );
+		};
+
+		class Calendar extends React.Component {
+		  constructor(props) {
+			super(props);
+		  }
+		  render() {
+			return (
+			  <div>
+				<h3>What date is it?</h3>
+				{ /* Change code below this line */ }
+				<CurrentDate date={Date()}/>
+				{ /* Change code above this line */ }
+			  </div>
+			);
+		  }
+		};
+		
+	Using array in props:
+		<p>{props.tasks.join(', ')}</p>
+	
+		<List tasks={["apple","orange"]}/>
+		
+	Use Default Props:
+		MyComponent.defaultProps = { location: 'San Francisco' }
+		
+	Override Default Props: The ability to set default props is a useful feature in React. The way to override the default props is to explicitly set the prop values for a component.
+		1. create your component
+		2. set default Props
+		3. while calling component in main component, we can pass prop to override default value
+		
+	Use PropTypes to Define the Props You Expect
+			React provides useful type-checking features to verify that components receive props of the correct type
+			It's considered a best practice to set propTypes when you know the type of a prop ahead of time.
+			
+			MyComponent.propTypes = { handleClick: PropTypes.func.isRequired }
+			Items.propTypes = { quantity: PropTypes.number.isRequired }
+			Syntax: <classComponent>.propTypes = { <prop>: PropTypes.<datatype>.isRequired }
+			
+			Note: As of React v15.5.0, PropTypes is imported independently from React, like this: import PropTypes from 'prop-types';
+			
+			
+	Access Props Using this.props (Class)
+		if the child component that you're passing a prop to is an ES6 class component, rather than a stateless functional component? The ES6 class component uses a slightly different convention to access props.
+		
+		Anytime you refer to a class component within itself, you use the this keyword. 
+			{this.props.data}

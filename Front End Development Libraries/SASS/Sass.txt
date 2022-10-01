@@ -1,0 +1,51 @@
+One feature of Sass that's different than CSS is it uses variables. They are declared and set to store data, similar to JavaScript.
+Sass, or "Syntactically Awesome StyleSheets", is a language extension of CSS. It adds features that aren't available in basic CSS, which make it easier for you to simplify and maintain the style sheets for your projects.
+
+<style type='text/scss'>
+	$main-fonts: Arial, sans-serif;
+	$headings-color: green;
+
+  .header{
+    text-align: center;
+	font-family: $main-fonts;
+	color: $headings-color;
+  }
+  .blog-post, h2 {
+    color: red;
+  }
+  
+  @mixin border-radius($radius){
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    border-radius:$radius;
+  }
+
+
+  #awesome {
+    width: 150px;
+    height: 150px;
+    background-color: green;
+    @include border-radius(15px);
+  }
+</style>
+
+
+Nested CSS : Sass allows nesting of CSS rules, which is a useful way of organizing a style sheet.
+nav {
+  background-color: red;
+
+  ul {
+    list-style: none;
+
+    li {
+      display: inline-block;
+    }
+  }
+}
+
+
+mixin:
+In Sass, a mixin is a group of CSS declarations that can be reused throughout the style sheet.
+Newer CSS features take time before they are fully adopted and ready to use in all browsers. As features are added to browsers, CSS rules using them may need vendor prefixes.
+A mixin is called with the @include directive

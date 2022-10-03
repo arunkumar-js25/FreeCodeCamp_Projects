@@ -423,3 +423,38 @@ Use Advanced JavaScript in React Render Method
 	You can also write JavaScript directly in your render methods, before the return statement, without inserting it inside of curly braces. This is because it is not yet within the JSX code. When you want to use a variable later in the JSX code inside the return statement, you place the variable name inside curly braces.
 	
 	We can write logic inside render() method and store value in variables
+	
+	If conditions inside render() > return() html:
+		SYNTAX: {condition && <p>markup</p>}
+	
+		render() {
+		// Change code below this line
+		return (
+		   <div>
+			 <button onClick={this.toggleDisplay}>Toggle Display</button>
+			 {this.state.display && <h1>Displayed!</h1> } 
+		   </div>
+		);
+	
+	ternary condition
+	{this.state.userAge >= 18 ? buttonTwo : this.state.userAge == "" ? buttonOne : buttonThree}
+	
+Use Array.map() to Dynamically Render Elements
+	Conditional rendering is useful, but you may need your components to render an unknown number of elements. Often in reactive programming, a programmer has no way to know what the state of an application is until runtime, because so much depends on a user's interaction with that program. Programmers need to write their code to correctly handle that unknown state ahead of time. Using Array.map() in React illustrates this concept.
+	
+	
+	Note: Keys only need to be unique between sibling elements, they don't need to be globally unique in your application.
+		const renderFrameworks = frontEndFrameworks.map((item, index) =>
+		  <li key={index}>{item}</li>
+		);
+
+Use Array.filter() to Dynamically Filter an Array
+
+
+
+Render React on the Server with renderToString
+
+Since React is a JavaScript view library and you can run JavaScript on the server with Node, this is possible. In fact, React provides a renderToString() method you can use for this purpose.
+The renderToString() method is provided on ReactDOMServer, which is available here as a global object. The method takes one argument which is a React element. Use this to render App to a string
+
+ReactDOMServer.renderToString(<App/>);

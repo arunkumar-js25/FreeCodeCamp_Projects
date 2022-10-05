@@ -110,6 +110,7 @@ Another method you have access to on the Redux store object is store.subscribe()
 	store.dispatch({type: ADD});
 	console.log(count);
 	store.dispatch({type: ADD});
+<<<<<<< HEAD
 	console.log(count);
 	
 Combine Multiple Reducers
@@ -141,3 +142,5 @@ Copy an Object with Object.assign
 	Copy an Object with Object.assign
 		const newObject = Object.assign({}, obj1, obj2);
 		This creates newObject as a new object, which contains the properties that currently exist in obj1 and obj2.
+=======
+

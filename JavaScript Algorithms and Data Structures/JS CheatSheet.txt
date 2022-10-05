@@ -1,0 +1,589 @@
+Basic javascript Problems: 113
+
+/******************************************************/
+ES6 : 29
+
+Spread operator:
+	ES6 introduces the spread operator, which allows us to expand arrays and other expressions in places where multiple parameters or elements are expected.
+	
+	apply() method
+		var arr = [6, 89, 3, 45];
+		var maximus = Math.max.apply(null, arr);  (OR)  
+		
+	Evaluate Arrays In-Place:
+		const maximus = Math.max(...arr);
+		function howMany(...args) {  return args.length; }
+		
+	NOTE: The rest parameter eliminates the need to check the args array and allows us to apply map(), filter() and reduce() on the parameters array.
+	
+Destructuring Assignment:
+	Destructuring assignment is special syntax introduced in ES6, for neatly assigning values taken directly from an object.
+	
+	Object:
+		const user = { name: 'John Doe', age: 34 };
+		const { name, age } = user;
+	
+	Function Parameter: 
+		const profileUpdate = (profileData) => {  const { name, age, nationality, location } = profileData; }
+		const profileUpdate = ({ name, age, nationality, location }) => { }
+		
+	Nested Objects: 
+		const { johnDoe: { age: userAge, email: userEmail }} = user;
+	Array: 
+		const [a, b, ...c] = [1, 2, 3, 4, 5, 6];
+	
+	
+String Interpolation:
+	const greeting = `Hello, my name is ${person.name}! I am ${person.age} years old.`;
+
+constructor
+	Constructors are functions that create new objects. 
+	They define properties and behaviors that will belong to the new object. Think of them as a blueprint for the creation of new objects.
+	
+	
+	class Book {   //It should be noted that the class syntax is just syntax, and not a full-fledged class-based implementation of an Oops
+	  constructor(author) {
+		this._author = author;
+	  }
+	  // getter
+	  get writer() {
+		return this._author;
+	  }
+	  // setter
+	  set writer(updatedAuthor) {
+		this._author = updatedAuthor;
+	  }
+	}
+
+module
+	<script type="module" src="filename.js"></script>
+
+Export
+	const add = (a,b) => a+b;
+	export { add };
+	export { add,substract };
+	export default function add(x, y) {  return x + y; }   //It is also used to create a fallback value for a file or module.
+
+Import
+	import add from "./functions.js";
+	import * as func from "./functions.js";
+
+promise
+	const myPromise = new Promise((resolve, reject) => {
+		if(condition here) {
+			resolve("Promise was fulfilled");
+		} else {
+			reject("Promise was rejected");
+		}
+	});
+	myPromise.then(result => {});
+	myPromise.catch(error => {});
+
+/******************************************************/
+Regex: 33
+
+	.test() method -->   if a pattern exists or not within a string   --> returns true/false
+		Syntax:				/searchWord/.test(sentence)    
+		case-sensitive: 	regex /Kevin/ will not match kevin or KEVIN
+		ignore case:		/kevin/i
+		OR Operator: 		/yes|no|maybe/
+		
+	.match() method -->  You can also extract the actual matches you found  --> returns first occurence by default 
+							output: [ 'brown',  index: 10,  input: 'The quick brown fox jumps over the lazy dog.',  groups: undefined ]
+			
+		Syntax:				'string'.match(/regex/);   //NOTE: opposite of test() method
+		global search:		'string'.match(/regex/gi); //returns all occurences in array --> output: [ 'brown', 'Brown' ]
+		 
+	WildCard characters:
+		. 		--> one character
+		+ 		--> multiple characters >= 1
+		* 		--> multiple characters >= 0
+		? 		--> turns greedy match to lazy match
+		^ 		--> beginning of strings MOTE: [^] is neglected character set if it is used inside bracket 
+		$ 		--> end of strings
+		{2,5}	--> quantity specifiers: You can specify the lower and upper number of patterns  
+					/ you can give without upper limit too as {2,}
+					/ Specify Exact Number of Matches {2}
+		()		--> grouping
+		(?=...)	--> Lookahead (positive)
+		(?!...)	-> Lookahead (negative)
+		
+	Expressions:
+		/[aeiou}/gi 	--> search any one of the character in it
+		/[a-z]/gi 		--> returns all alpha characters
+		/[a-z0-9]/gi 	--> returns all alphanumeric characters
+		/[^aeiou]/gi	--> the negated character set only excludes the vowel characters.
+		/s+/gi			--> find matches when the letter s occurs one or more times
+		/Aa*/gi			--> find matches when the letter A and a* occurs zero or more times
+		/t[a-z]*i/		--> greedy match - return matching long possible characters
+		/t[a-z]*?i/		--> lazy match	- return matching short possible characters
+		/[A-Za-z0-9_]/g	--> Match All Letters and Numbers (longhand)
+		/\w/g			--> Match All Letters and Numbers (shorthand)   \w = [A-Za-z0-9_]
+		/\W/g			--> Neglect All matching Letters and Numbers	\W = [^A-Za-z0-9_]
+		/\d/g			--> Match all digits							\d = [0-9]
+		/\D/g			--> Match all Non-digits						\D = [^0-9]
+		\s				--> whitespaces
+		\S				--> Non-whitespaces
+		/favou?rite/	--> Check for All or None (like optional)
+		/^(/d+) \1 \1$/	--> Capture Groups  // captures exactly 3 values '42 42 42'
+		
+	Use Capture Groups to Search and Replace
+		"Code Camp".replace(/(\w+)\s(\w+)/, '$2 $1');  //$ symbol to capture groups
+		
+		Example:
+		let str = "one two three";
+		let fixRegex = /^(\w+)\s(\w+)\s(\w+)$/; // Change this line
+		let replaceText = "$3 $2 $1"; // Change this line
+		let result = str.replace(fixRegex, replaceText);
+		
+	Restrict Possible Usernames
+		/^[a-z]([a-z]+\d*|[0-9]{2,})$/gi;
+
+		Usernames can only use alpha-numeric characters.
+		The only numbers in the username have to be at the end. There can be zero or more of them at the end. Username cannot start with the number.
+		Username letters can be lowercase and uppercase.
+		Usernames have to be at least two characters long. A two-character username can only use alphabet letters as characters.	
+		
+		
+/******************************************************/
+Debugging: 12
+
+console.log();
+console.clear();
+console.log(typeof "");  //the console will display the strings string "", number 1, object [], and object {}.
+
+/******************************************************/
+Basic Data Structures: 20
+
+splice(startpos, no.of.ele) 								- removes elements from array
+splice(startpos, no.of.ele, newele1, new ele2, ...) 		- removes elements from array
+
+slice(startpos, endPos) 									- copies elements from array
+let thatArray = [...thisArray];								- copy an Array with the Spread Operator
+let sentence = ['learning', ...fragment, 'is', 'fun'];		- combines array values using Spread Operator
+
+arr.indexOf(ele);											- Index Of
+for(let names in obj)  {    nameList.push(names); } 		- Get keys in an object
+
+
+/******************************************************/
+Basic Algorithm Scripting: 16
+
+#Reverse a String:
+function reverseString(str) {
+  return str.split('').reverse().join('');
+}
+
+#Factorialize:
+function factorialize(num) {
+  if(num<2){
+    return 1;
+  }
+  return num * factorialize(num-1);
+}
+
+#Find the Longest Word in a String:
+function findLongestWordLength(str) {
+  let words = str.split(" ")
+  let maxLen = 0;
+  for(let i=0; i<words.length;i++){
+      if(words[i].length > maxLen){
+        maxLen = words[i].length;
+      }
+  }
+  return maxLen;
+}
+
+#Return Largest Numbers in Arrays
+function largestOfFour(arr) {
+  let res= [];
+  for(let i=0;i<arr.length;i++)
+  {
+    res.push(NaN);
+    let ele = arr[i];
+    res[i]=Math.max(...ele);
+  }
+  console.log(res);
+  return res;
+}
+
+#Confirm the Ending (.endsWith() - ES2015 approach)
+function confirmEnding(str, target) {
+  if(str.substr(-target.length) == target ){
+    return true;
+  }
+  return false;
+}
+
+#Repeat a String Repeat a String
+function repeatStringNumTimes(str, num) {
+  let res = "";
+  for (let i=0;i<num;i++){
+    res += str;
+  }
+  return res;
+}
+
+#Truncate a String with a ... ending.
+function truncateString(str, num) {
+  if(num<str.length){
+    return str.substr(0,num)+"...";
+  }
+  return str;
+}
+
+#Finders Keepers
+function findElement(arr, func) {
+  for(let i=0;i<arr.length;i++){
+    if(func(arr[i])){
+      return arr[i];
+    }
+  }
+  return undefined;
+}
+findElement([1, 3], num => num % 2 === 0);
+
+#Boo who - Check if a value is classified as a boolean primitive. Return true or false
+function booWho(bool) {
+  if(typeof bool === "boolean")
+  {
+    return true;
+  }
+  return false;
+}
+
+#Title Case a Sentence
+function titleCase(str) {
+  return str.toLowerCase().replace(/(^|\s)\S/g, firstLetter => firstLetter.toUpperCase());
+}
+
+#Slice and Splice
+You are given two arrays and an index. Copy each element of the first array into the second array, in order.
+Begin inserting elements at index n of the second array.
+Return the resulting array. The input arrays should remain the same after the function runs.
+
+function frankenSplice(arr1, arr2, n) {
+  let newArr = arr2.slice(0,n);
+  newArr.push(...arr1);
+  newArr.push(...arr2.slice(n));
+  console.log(newArr);
+  return newArr;
+}
+
+#Falsy Bouncer
+Remove all falsy values from an array. Falsy values in JavaScript are false, null, 0, "", undefined, and NaN.
+Hint: Try converting each value to a Boolean.
+
+function bouncer(arr) {
+  //let falsyValues = [false, null, 0, "", undefined, NaN];
+  let newArr = [];
+  for(let i=0;i<arr.length;i++){
+    if(arr[i]){
+        newArr.push(arr[i]);
+    }
+  }
+  return newArr;
+}
+
+#Where do I Belong
+function getIndexToIns(arr, num) {
+  arr.sort(function(a, b){return a-b});
+  console.log(arr);
+  for(let i=0;i<arr.length;i++){
+    if(arr[i]>=num){
+      return i;
+    }
+  }
+  return arr.length;
+}
+(OR)
+function getIndexToIns(arr, num) {
+  return arr.filter(val => num > val).length;
+}
+
+#Mutations  - Return true if the string in the first element of the array contains all of the letters of the string in the second element of the array.
+function mutation(arr) {
+   return arr[1]
+    .toLowerCase()
+    .split("")
+    .every(function(letter) {
+      return arr[0].toLowerCase().indexOf(letter) !== -1;
+    });
+}
+
+#Chunky Monkey -  Write a function that splits an array (first argument) into groups the length of size (second argument) and returns them as a two-dimensional array.
+function chunkArrayInGroups(arr, size) {
+  let newArr = [];
+  while(arr.length>=size){
+      newArr.push(arr.splice(0,size));
+  }
+
+  if(arr.length > 0){
+    newArr.push(arr);
+  }
+
+  return newArr;
+}
+
+/******************************************************/
+Projects
+
+#Ascii
+"S".charCodeAt(0); //Get ASCII Value
+String.fromCharCode(65); //Get Char Value
+
+/*
+#Telephone Number Validator
+Return true if the passed string looks like a valid US phone number.
+The user may fill out the form field any way they choose as long as it has the format of a valid US number. The following are examples of valid formats for US numbers (refer to the tests below for other variants):
+
+555-555-5555
+(555)555-5555
+(555) 555-5555
+555 555 5555
+5555555555
+1 555 555 5555
+For this challenge you will be presented with a string such as 800-692-7753 or 8oo-six427676;laskdjf. Your job is to validate or reject the US phone number based on any combination of the formats provided above. The area code is required. If the country code is provided, you must confirm that the country code is 1. Return true if the string is a valid US phone number; otherwise return false.
+telephoneCheck("1 456 789 4444");*/
+
+function telephoneCheck(str) {
+  let regEx = /^(\d{3}-|\u0028\d{3}\u0029|1\s\d{3}-|1(\s\u0028\d{3}\u0029\s|\s\d{3}\s|\u0028\d{3}\u0029|\d{3}))\d{3}[-\s]\d{4}$|^\d{10}$/;
+  return regEx.test(str);
+}
+
+/*****************************************/
+OOPS: 26
+
+#constructor declaration (sample with 2 parameters and 1 property)
+let Bird = function(name, color) {   
+  this.name = name;
+  this.color = color;
+  this.numLegs = 2;
+}
+let crow = new Bird("Alexis", "black"); 
+
+Instance Create:
+1. create an instance of Animal using the new operator:   //There are some disadvantages when using this syntax for inheritance, which are too complex for the scope of this challenge.
+		let animal = new Animal();
+
+2. let animal = Object.create(Animal.prototype);
+		
+#check the constructor is same or not - instanceOf
+crow instanceof Bird; //return true
+
+#Use Prototype Properties to Reduce Duplicate Code - Now all instances of Bird have the numLegs property.
+Bird.prototype.numLegs = 2;
+console.log(duck.numLegs);
+console.log(canary.numLegs);
+
+Two kinds of properties: own properties and prototype properties. Own properties are defined directly on the object instance itself. And prototype properties are defined on the prototype.
+
+function Bird(name) {
+  this.name = name;  //own property
+}
+
+Bird.prototype.numLegs = 2; // prototype property
+
+let duck = new Bird("Donald");
+
+let ownProps = [];
+let prototypeProps = [];
+
+for (let property in duck) {
+  if(duck.hasOwnProperty(property)) {
+    ownProps.push(property); 		//Own property
+  } else {
+    prototypeProps.push(property);  //Prototype property
+  }
+}
+
+console.log(ownProps);
+console.log(prototypeProps);
+
+#Adding functions using prototype
+Bird.prototype = {
+  constructor: Bird,  //There is one crucial side effect of manually setting the prototype to a new object. It erases the constructor property!
+  numLegs: 2,
+  eat: function() {
+    console.log("nom nom nom");
+  },
+  describe: function() {
+    console.log("My name is " + this.name); 
+  }
+};
+
+#Understand Where an Object’s Prototype Comes From
+Bird.prototype.isPrototypeOf(duck);
+
+#Understand the Prototype Chain
+The hasOwnProperty method is defined in Object.prototype, which can be accessed by Bird.prototype, which can then be accessed by duck.
+Object.prototype.isPrototypeOf(Dog.prototype);
+
+#Use Inheritance So You Don't Repeat Yourself
+There's a principle in programming called Don't Repeat Yourself (DRY). 
+
+
+#Inherit Behaviors from a Supertype
+let bird = Object.create(Animal.prototype); 
+
+#Use a Mixin to Add Common Behavior Between Unrelated Objects
+let flyMixin = function(obj) {
+  obj.fly = function() {
+    console.log("Flying, wooosh!");
+  }
+};
+flyMixin(bird);
+flyMixin(plane);
+bird.fly();
+plane.fly();
+
+#Private Variable in constructor
+function Bird() {
+  let weight = 15;
+
+  this.getWeight = function(){
+    return weight;
+  }
+
+}
+
+#Understand the Immediately Invoked Function Expression (IIFE)
+	A common pattern in JavaScript is to execute a function as soon as it is declared:
+
+			(function () {
+			  console.log("Chirp, chirp!");
+			})();
+	This is an anonymous function expression that executes right away, and outputs Chirp, chirp! immediately.
+
+	Note that the function has no name and is not stored in a variable. The two parentheses () at the end of the function expression cause it to be immediately executed or invoked. This pattern is known as an immediately invoked function expression or IIFE.
+
+#Use an IIFE to Create a Module
+	An immediately invoked function expression (IIFE) is often used to group related functionality into a single object or module. For example, an earlier challenge defined two mixins:
+
+			function glideMixin(obj) {
+			  obj.glide = function() {
+				console.log("Gliding on the water");
+			  };
+			}
+			function flyMixin(obj) {
+			  obj.fly = function() {
+				console.log("Flying, wooosh!");
+			  };
+			}
+	We can group these mixins into a module as follows:
+
+			let motionModule = (function () {
+			  return {
+				glideMixin: function(obj) {
+				  obj.glide = function() {
+					console.log("Gliding on the water");
+				  };
+				},
+				flyMixin: function(obj) {
+				  obj.fly = function() {
+					console.log("Flying, wooosh!");
+				  };
+				}
+			  }
+			})();
+	Note that you have an immediately invoked function expression (IIFE) that returns an object motionModule. This returned object contains all of the mixin behaviors as properties of the object. The advantage of the module pattern is that all of the motion behaviors can be packaged into a single object that can then be used by other parts of your code. Here is an example using it:
+
+		motionModule.glideMixin(duck);
+		duck.glide();
+
+/********************************************* SUMMARY of OOPS: ***************************************************/
+function Animal() { }								//create parent constructor
+Animal.prototype = {  constructor: Animal, };		//NOTE: use ',' instead of ';'
+
+function Dog(name) { this.name = name}				//Create Constructor
+Dog.prototype = Object.create(Animal.prototype);	//create prototype (this will erase the constructor property
+Dog.prototype.constructor = Dog;					//Reset the inherited constructor property
+Dog.prototype.bark = function() { return "Woof!" };	//New method to child / Override Inherited Methods
+let beagle = new Dog();								//initialization
+
+
+/*****************************************/
+Functional Programming: 24
+
+Functional programming is a style of programming where solutions are simple, isolated functions, without any side effects outside of the function scope: INPUT -> PROCESS -> OUTPUT
+Callbacks are the functions that are slipped or passed into another function to decide the invocation of that function. 
+
+Functions that can be assigned to a variable, passed into another function, or returned from another function just like any other normal value, are called first class functions. 
+In JavaScript, all functions are first class functions.
+
+The functions that take a function as an argument, or return a function as a return value, are called higher order functions.
+When functions are passed in to or returned from another function, then those functions which were passed in or returned can be called a lambda.
+
+
+Use Higher-Order Functions map, filter, or reduce to Solve a Complex Problem
+
+NOTE:
+The reduce method allows for more general forms of array processing, and it's possible to show that both filter and map can be derived as special applications of reduce. The reduce method iterates over each item in an array and returns a single value (i.e. string, number, object, array). This is achieved via a callback function that is called on each iteration.
+
+The callback function accepts four arguments. The first argument is known as the accumulator, which gets assigned the return value of the callback function from the previous iteration, the second is the current element being processed, the third is the index of that element and the fourth is the array upon which reduce is called.
+
+In addition to the callback function, reduce has an additional parameter which takes an initial value for the accumulator. If this second parameter is not used, then the first iteration is skipped and the second iteration gets passed the first element of the array as the accumulator.
+
+
+#Sorting
+function ascendingOrder(arr) {
+	  return arr.sort(function(a, b) {
+		return a - b;
+	  });
+}
+
+Asc Order sort for characters
+	arr.sort(function(a, b) {
+		return a === b ? 0 : a > b ? 1 : -1;
+	  });
+
+Desc Order sort for characters
+function reverseAlpha(arr) {
+	  return arr.sort(function(a, b) {
+		return a === b ? 0 : a < b ? 1 : -1;
+	  });
+}
+
+Useful Array Methods:
+	every()
+	some()
+	
+The arity of a function is the number of arguments it requires. Currying a function means to convert a function of N arity into N functions of arity 1.
+In other words, it restructures a function so it takes one argument, then returns another function that takes the next argument, and so on.
+		function unCurried(x, y) {
+		  return x + y;
+		}
+
+		function curried(x) {
+		  return function(y) {
+			return x + y;
+		  }
+		}
+
+		const curried = x => y => x + y
+		
+curried(1)(2) would return 3
+
+Similarly, partial application can be described as applying a few arguments to a function at a time and returning another function that is applied to more arguments. Here's an example:
+
+	function impartial(x, y, z) {
+	  return x + y + z;
+	}
+
+	const partialFn = impartial.bind(this, 1, 2);
+partialFn(10); // 13
+
+
+/*****************************************/
+Intermediate Algorithms Tips: 21
+
+const [min, max] = arr.sort((a, b) => a - b); //sort min and max values
+
+const range = Array(max - min + 1).fill(0).map((_, i) => i + min);  //Create range of values
+
+Array.IsArray() //check object is array or not
+
+arr.findIndex(func) //returns the first index which satisfies the func
+
+parseInt(1010,2) //convert binary into int
+String.fromCharCode(_)  //get ASCII character

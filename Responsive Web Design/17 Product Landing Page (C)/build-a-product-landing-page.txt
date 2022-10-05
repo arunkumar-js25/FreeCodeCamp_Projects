@@ -1,0 +1,174 @@
+** start of undefined **
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fellow Beginners</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div >
+     <header id="header" class="menu">
+         <img id="header-img" class="logo" src="https://th.bing.com/th/id/OIP._9FhSbQ8eHZw84hh6f4YhAHaFj?w=229&h=180&c=7&r=0&o=5&dpr=1.25&pid=1.7" />
+       <div id="headerSection">
+       <h1>Fellow Beginners</h1>
+       <nav id="nav-bar">
+         <ul id="nav-ul">
+           <li><a class="nav-link" href="#section-content">Work</a></li>
+           <li><a class="nav-link" href="#section-video">About</a></li>
+           <li><a class="nav-link" href="#section-subscribe">Contact</a></li>
+          </ul>
+       </nav>
+       </div>
+     </header>
+
+      <section id="section-subscribe">
+        <h1>Subscribe to our newsletter</h1>
+        <form id="form" action="https://www.freecodecamp.com/email-submit">
+        <label for="email">
+          <input name="email" id="email" type="email" placeholder="Enter your Email"/>
+        </label>
+          <input type="submit" target="_blank" id="submit"/>
+        </form>
+      </section>
+
+      <div>
+        <section id="section-content">
+          <h1>Services / Solutions / Training </h1>
+          <p>Develop custom windows applications for your easy life<br/>Automate your day-to-day mundane tasks by scripts or using Robotic process automation tools<br/>Tutor on high level programming & scripting languages namely Python, Java, C#, Javascript and Web development<br/>Offers training on Oracle enterprise applications/Tools and business flows.
+        </section>
+        <section id="section-video">
+          <h1> About Us </h1>
+          <p>Checkout our Youtube Channel for free learning materials</p>
+          <iframe id="video" title="Create Connection to Database via SQL Developer [Oracle]" src="https://www.youtube.com/embed/5b1nr7oiEds?controls=0&rel=0&disablekb=1&showinfo=0&modestbranding=0&html5=1&iv_load_policy=3&autoplay=0&end=0&loop=0&playsinline=0&start=0&nocookie=false&enablejsapi=1&origin=https%3A%2F%2Ffellowbeginners.wordpress.com&widgetid=1"/> 
+        </section>
+      </div>
+
+     </div>
+  </body>
+</html>
+
+** end of undefined **
+
+** start of undefined **
+
+*,
+::before,
+::after {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Baskervville', serif;
+  color: black;
+}
+
+.menu{
+  position: fixed;
+  top:0;
+}
+
+header{
+  width: 100%;
+  display:flex;
+  top: 0;
+  min-height: 75px;
+  padding: 0px 0px;
+  align-items: center;
+  background-color: #eee;
+}
+
+#headerSection{
+  width: 100%;
+  display:flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+nav > ul{
+  display:flex;
+}
+
+li {
+  list-style: none;
+  width: 50px;
+}
+
+li > a{
+  text-decoration: none;
+  color: rgba(100,0,0,0.9);
+
+}
+
+a:hover{
+    background-color: rgba(255,255,0,0.9);
+}
+
+.logo{
+  width: 100px;
+  padding-left:0;
+}
+section{
+  display:block;
+  margin: 20px auto;
+}
+
+h1{
+  text-align: center;
+
+}
+#section-subscribe{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 200px;
+  margin-top: 100px;
+}
+
+#section-content{
+  font-size: 18px;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  header {
+    flex-wrap: wrap;
+  }
+}
+
+#section-subscribe > h1{
+  display: block;
+  margin: 1em auto;
+  text-align: center;
+}
+
+#email{
+  width: 300px;
+  height: 2em;
+}
+
+#submit {
+  display: block;
+  margin: 1em auto;
+  height: 2em;
+  font-size: 1.1rem;
+  min-width: 150px;
+}
+
+#section-video, #section-video>p{
+  text-align: center;
+  font-size: 18px;
+}
+
+** end of undefined **
+

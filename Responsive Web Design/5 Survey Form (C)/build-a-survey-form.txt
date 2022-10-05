@@ -1,0 +1,157 @@
+** start of undefined **
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>freeCodeCamp Survey Form</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header>
+    <h1 id="title">freeCodeCamp Survey Form</h1>
+    <p id="description">Thank you for taking the time to help us improve the platform</p>
+    <br>
+    </header>
+  <form id="survey-form">
+    <div class="form-group">
+      <label for="name" id="name-label">
+        Name
+        <input id="name" type="text" placeholder="Enter your name" required/>
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="email" id="email-label">
+        Email
+        <input id="email" type="email" placeholder="Enter your Email" required/>
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label for="age" id="number-label">
+        Age (optional)
+        <input id="number" type="number" placeholder="Age" min="13" max="120"/>
+      </label>
+    </div>
+
+    <div class="form-group">
+      Which option best describes your current role?
+      <label for="dropdown">
+        <select id="dropdown">
+          <option value="1">select current role</option>
+          <option value="2">Student</option>
+          <option value="3">Full time Job</option>
+        </select>
+      </label>
+   </div>
+
+   <div class="form-group">
+    Would you recommend freeCodeCamp to a friend?
+    <label for="definitely"><input type="radio" name="recommend" id="definitely" value="definitely" class="inline" checked>Definitely</label>
+    <label for="maybe"><input type="radio" name="recommend" id="maybe" value="maybe" class="inline">Maybe</label>
+    <label for="notSure"><input type="radio" name="recommend" id="notSure" value="notSure" class="inline">Not sure</label>
+  </div>
+
+  <div class="form-group">
+    Would you recommend freeCodeCamp to a friend?
+    <label for="front">
+      <input type="checkbox" name="improve" value="front" id="front" class="inline">Front-end Projects
+    </label>
+    <label for="back">
+      <input type="checkbox" name="improve" value="back"  id="back" class="inline">Back-end Projects
+     </label>
+     <label for="data">
+      <input type="checkbox" name="improve" value="data" id="data" class="inline">Data Visualization
+    </label>
+  </div>
+
+  <div class="form-group">
+    <label for="comment">Any comments or suggestions?
+    <textarea id="comment" placeholder="Enter your comment here..." rows="3" cols="50"></textarea>
+    </label>
+  </div>
+
+  <div class="form-group">
+    <input type="submit" id="submit">
+  </div>
+  </form>
+  </body>
+</html>
+
+** end of undefined **
+
+** start of undefined **
+
+body{
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: white;
+    background-color: hsl(225,50%,40%);
+    width: 100%;
+    margin: 3.125rem auto 0 auto;
+    max-width: 540px;
+}
+
+.header {
+  padding: 0 0.625rem;
+  margin-bottom: 1.875rem;
+}
+
+h1, #description {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+form{
+    display: block;
+    margin-top: 0em;
+    background: rgba(0,0,127,0.60);
+    box-shadow: 0 0 0 15px rgba(0,0,127,0.60);
+    border-radius: 0.25rem;
+}
+
+label {
+  display: block;
+  align-items: center;
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+}
+
+input,
+textarea,
+select {
+  margin: 0 0 0 0;
+  width: 100%;
+  min-height: 2em;
+}
+
+.form-group{
+  margin: 0 auto 1.25rem auto;
+  padding: 0.25rem;
+}
+
+.inline {
+  width: unset;
+  margin: 0 0.5em 0 0;
+  vertical-align: middle;
+}
+
+
+#submit {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(0,180,27);
+  color: white;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+
+
+** end of undefined **
+

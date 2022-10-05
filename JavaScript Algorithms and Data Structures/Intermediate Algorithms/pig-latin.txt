@@ -1,0 +1,13 @@
+function translatePigLatin(str) {
+  let regexStr = /[aeiou]/;
+  let newPos = str.match(regexStr);
+  if(newPos == null){
+    str = str+"ay";
+  }
+  else{
+      str = str.substr(newPos.index) + str.substr(0,newPos.index)+ (newPos.index == 0?"way":"ay");
+  }
+  return str;
+}
+
+translatePigLatin("rhythm");

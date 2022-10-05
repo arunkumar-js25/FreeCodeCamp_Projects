@@ -1,0 +1,14 @@
+function smallestCommons(arr) {
+  let [a,b] = arr.sort((x,y) => x-y);
+  let range = Array(b - a + 1).fill(0).map((_, i) => i + a);
+  function gcd(a,b){
+    if(b==0){
+      return a;
+    }
+    return gcd(b,a%b);
+  }
+  let lcm = (a,b) => a*b/gcd(a,b);
+  return range.reduce((a,b)=> lcm(a,b));
+}
+
+smallestCommons([1,5]);

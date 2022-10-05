@@ -1,0 +1,14 @@
+function myReplace(str, before, after) {
+  let afterStr;
+  if(before[0] >= "A" && before[0] <= "Z"){
+    afterStr = after[0].toUpperCase() + after.substr(1);
+  }
+  else if(before[0] >= "a" && before[0] <= "z"){
+    afterStr= after[0].toLowerCase() + after.substr(1);
+  }
+  str = str.replace(before,afterStr);
+  console.log(str);
+  return str;
+}
+
+myReplace("He is Sleeping on the couch", "Sleeping", "sitting");

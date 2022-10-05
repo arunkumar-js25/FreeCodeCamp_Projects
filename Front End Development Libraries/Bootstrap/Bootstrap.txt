@@ -1,0 +1,31 @@
+Notes:
+Bootstrap uses a responsive grid system, which makes it easy to put elements into rows and specify each element's relative width. Most of Bootstrap's classes can be applied to a div element.
+
+Bootstrap Link:
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+
+	Classes:
+	img-responsive					Do this, and the image should perfectly fit the width of your page
+	text-center 					we can center our heading element to make it look better
+	text-danger						change text color to red. use in span tags
+	btn btn-default					Look much better than the plain HTML ones. - only as wide as the text that they contain
+	btn btn-default btn-block		button will stretch to fill your page's entire horizontal space
+	btn btn-primary btn-block		main color you'll use in your app. It is useful for highlighting actions you want your user to take.
+	btn btn-block btn-info			call attention to optional actions that the user can take
+	btn btn-block btn-danger		the button color you'll use to notify users that the button performs a destructive action
+	well							block with lite gray color
+
+
+Put elements side by side:   	<div class="row"><div class="col-xs-4"></div></div>
+								col - md(medium) xs (extra small) - * (no.of.colmns)
+								
+Font Awesome Link:
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+	Classes:
+	fas fa-thumbs-up				thumbs up icon
+	fas fa-info-circle				info icon (i inside circle)
+	fas fa-info						info icon (i)
+	fas fa-trash					dustbin icon
+	fa-paper-plane					paper Plane icon

@@ -1,0 +1,22 @@
+function addTogether(...arr) {
+  console.log(arr);
+  if(arr.length == 2){
+    if(typeof(arr[0]) != 'number' || typeof(arr[1]) != 'number')
+    {
+        return undefined;
+    }
+
+    return arr[0]+arr[1];
+  }
+
+  if(typeof(arr[0]) != 'number'){ return undefined; }
+
+  return function(y){
+      if(typeof(y) != 'number'){
+        return undefined;
+      }
+      return arr[0]+y;
+    }
+}
+
+addTogether(2,3);

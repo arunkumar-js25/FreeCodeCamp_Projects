@@ -1,0 +1,20 @@
+function sumFibs(num) {
+  let sum =2;
+  let fibo=[1,1,2];
+  let k=2;
+  for(let i=0;i<num;i++){
+      let val=fibo[k]+fibo[k-1];
+      if(val>num){
+        break;
+      }
+      if(val%2!=0){
+        sum+=val;
+      }
+      fibo.push(val);
+      k++;
+  }
+  console.log(sum);
+  return sum;
+}
+
+sumFibs(10);

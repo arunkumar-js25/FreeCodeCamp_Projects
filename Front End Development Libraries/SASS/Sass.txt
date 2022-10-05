@@ -1,0 +1,131 @@
+One feature of Sass that's different than CSS is it uses variables. They are declared and set to store data, similar to JavaScript.
+Sass, or "Syntactically Awesome StyleSheets", is a language extension of CSS. It adds features that aren't available in basic CSS, which make it easier for you to simplify and maintain the style sheets for your projects.
+
+<style type='text/scss'>
+	$main-fonts: Arial, sans-serif;
+	$headings-color: green;
+
+  .header{
+    text-align: center;
+	font-family: $main-fonts;
+	color: $headings-color;
+  }
+  .blog-post, h2 {
+    color: red;
+  }
+  
+  @mixin border-radius($radius){
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    border-radius:$radius;
+  }
+  
+  @mixin text-effect($val) {
+  @if $val == danger {
+    color: red;
+  }
+  @else if $val == alert {
+    color: yellow;
+  }
+  @else if $val == success {
+    color: green;
+  }
+  @else {
+    color: black;
+  }
+}
+
+
+  #awesome {
+    width: 150px;
+    height: 150px;
+    background-color: green;
+	@include text-effect(success);
+    @include border-radius(15px);
+  }
+  
+  
+  
+</style>
+
+
+Nested CSS : Sass allows nesting of CSS rules, which is a useful way of organizing a style sheet.
+nav {
+  background-color: red;
+
+  ul {
+    list-style: none;
+
+    li {
+      display: inline-block;
+    }
+  }
+}
+
+
+mixin:
+In Sass, a mixin is a group of CSS declarations that can be reused throughout the style sheet.
+Newer CSS features take time before they are fully adopted and ready to use in all browsers. As features are added to browsers, CSS rules using them may need vendor prefixes.
+A mixin is called with the @include directive
+
+Use @if and @else to Add Logic To Your Styles
+	@if $val == danger {
+    color: red;
+  }
+  @else if $val == alert {
+    color: yellow;
+  }
+  @else{
+  }
+
+interpolation: #{}
+
+Use @for to Create a Sass Loop
+	
+	@for $i from 1 through 12 {
+	  .col-#{$i} { width: 100%/12 * $i; }
+	}
+	
+Use @each to Map Over Items in a List
+	@each $color in blue, black, red {
+    .#{$color-bg}-text {background-color: $color;}  //class
+	##{$color}-bg {background-color: $color;}		//Id
+  }
+  
+	$colors: (color1: blue, color2: red, color3: green);
+
+	@each $key, $color in $colors {
+	  .#{$color}-text {color: $color;}
+	}
+	
+The @while directive is an option with similar functionality to the JavaScript while loop. It creates CSS rules until a condition is met.
+
+	$x: 1;
+	@while $x < 13 {
+	  .col-#{$x} { width: 100%/12 * $x;}
+	  $x: $x + 1;
+	}
+	
+Split Your Styles into Smaller Chunks with Partials
+
+	Partials in Sass are separate files that hold segments of CSS code. These are imported and used in other Sass files. This is a great way to group similar code into a module to keep it organized.
+	
+	Names for partials start with the underscore (_) character, which tells Sass it is a small segment of CSS and not to convert it into a CSS file. Also, Sass files end with the .scss file extension. To bring the code in the partial into another Sass file, use the @import directive.
+	
+	import scss file _variables.scss into main.scss file
+		@import 'variables'
+		
+		
+Extend One Set of CSS Styles to Another Element
+Sass has a feature called extend that makes it easy to borrow the CSS rules from one element and build upon them in another.
+
+	.header{
+    text-align: center;
+	font-family: $main-fonts;
+	color: $headings-color;
+	}
+	.blog-post, h2 {
+	@extend .header;
+    color: red;
+	}

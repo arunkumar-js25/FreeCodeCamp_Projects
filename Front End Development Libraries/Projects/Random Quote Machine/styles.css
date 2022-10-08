@@ -3,8 +3,7 @@
   padding: 0;
   list-style: none;
   vertical-align: baseline;
-  --maincolor1: #999;
-}
+  --maincolor1: #999; }
 
 body {
   display: flex;
@@ -12,8 +11,7 @@ body {
   position: relative;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-}
+  height: 100vh; }
 
 #quote-box {
   padding: 10px;
@@ -24,52 +22,47 @@ body {
   justify-content: center;
   width: 500px;
   height: auto;
-
-  #quote {
+  color: white;
+  background-color: #fff; }
+  #quote-box #quote {
     width: 100%;
     display: block;
-    position: relative;
-    #text {
-      i {
-        font-size: 1em;
-        margin-right: 0.4em;
-      }
+    position: relative; }
+    #quote-box #quote #text {
       font-size: 20;
       display: absolute;
       text-align: center;
       margin-top: 100px;
       width: 450px;
       height: auto;
-    }
-
-    #quote-author {
+      color: #000; }
+      #quote-box #quote #text i {
+        font-size: 1em;
+        margin-right: 0.4em; }
+    #quote-box #quote #quote-author {
       font-size: 20;
       width: 450px;
       height: auto;
       padding-top: 20px;
       font-size: 1em;
       text-align: right;
-    }
-  }
-  .buttons {
+      color: #000; }
+  #quote-box .buttons {
     margin: auto;
-    display: block;
-    .button {
+    display: block; }
+    #quote-box .buttons .button {
       outline: none;
       color: #fff;
       float: left;
       width: 50px;
       height: 20px;
       padding: 5px;
-      margin: 0 0 0 10px;
-    }
-
-    #new-quote {
+      margin: 0 0 0 10px; }
+    #quote-box .buttons #new-quote {
       float: right;
       width: 50px;
       height: auto;
       padding: 5px;
-      color: #fff;
-    }
-  }
-}
+      color: #fff; }
+
+/*# sourceMappingURL=styles.css.map */

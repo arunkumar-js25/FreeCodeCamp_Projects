@@ -1,0 +1,103 @@
+D3, or D3.js, stands for Data Driven Documents. It's a JavaScript library for creating dynamic and interactive data visualizations in the browser.
+D3 is built to work with common web standards – namely HTML, CSS, and Scalable Vector Graphics (SVG).
+D3 supports many different kinds of input data formats. Then, using its powerful built-in methods, you can transform those data into different charts, graphs, and maps.
+
+Sample Example1:
+	<body>
+	  <script>
+		// Add your code below this line
+		const anchor = d3.select("body").append("h1").text("Learning D3");
+
+
+		// Add your code above this line
+	  </script>
+	</body>
+
+Functions:
+	select()
+	selectAll()
+	data() => enter()
+	append()
+	text()  //The D3 text() method can take a string or a callback function as an argument: selection.text((d) => d)
+	style("font-family","verdana")   //selection.style("color", (d) => {  if(){ return "red"; }  return "green"; });
+	style("cssProperty", (d) => d)
+	attr("class", "bar");
+
+
+How DataSet works:
+	The D3 library focuses on a data-driven approach. When you have a set of data, you can apply D3 methods to display it on the page.
+	The first step is to make D3 aware of the data. The data() method is used on a selection of DOM elements to attach the data to those elements. The data set is passed as an argument to the method.
+	A common workflow pattern is to create a new element in the document for each piece of data in the set. D3 has the enter() method for this purpose.
+	When enter() is combined with the data() method, it looks at the selected elements from the page and compares them to the number of data items in the set. If there are fewer elements than data items, it creates the missing elements.
+
+		const dataset = [12, 31, 22, 17, 25, 18, 29, 14, 9];
+
+		// Add your code below this line
+		d3.select("body").selectAll("h2").data(dataset).enter().append("h2").text("New Title");
+
+
+
+Learn About SVG in D3:
+	SVG stands for Scalable Vector Graphics.
+	
+	Here "scalable" means that, if you zoom in or out on an object, it would not appear pixelated. It scales with the display system, whether it's on a small mobile screen or a large TV monitor.
+
+	SVG is used to make common geometric shapes. Since D3 maps data into a visual representation, it uses SVG to create the shapes for the visualization. SVG shapes for a web page must go within an HTML svg tag.
+
+	CSS can be scalable when styles use relative units (such as vh, vw, or percentages), but using SVG is more flexible to build data visualizations.
+		
+		<style>
+		  .bar:hover {
+			fill: brown;
+		  }
+		</style>
+		
+		const w = 500;
+		const h = 100;
+		const svg = d3.select("body")
+                  .append("svg")
+                  .attr("width", w)
+                  .attr("height", h);
+				  
+	The next step is to create a shape to put in the svg area. There are a number of supported shapes in SVG, such as rectangles and circles. They are used to display data. For example, a rectangle (<rect>) SVG shape could create a bar in a bar chart.
+
+	When you place a shape into the svg area, you can specify where it goes with x and y coordinates. The origin point of (0, 0) is in the upper-left corner. Positive values for x push the shape to the right, and positive values for y push the shape down from the origin point.
+
+	To place a shape in the middle of the 500 (width) x 100 (height) svg from last challenge, the x coordinate would be 250 and the y coordinate would be 50.
+
+	An SVG rect has four attributes. There are the x and y coordinates for where it is placed in the svg area. It also has a height and width to specify the size.
+				
+				svg.selectAll("rect")
+				   .data(dataset)
+				   .enter()
+				   .append("rect")
+				   .attr("x", (d, i) => i * 30)
+				   .attr("y", (d, i) => h - 3 * d)  // y = heightOfSVG - heightOfBar // otherwise the bar shows upside down
+				   .attr("width", 25)
+				   .attr("height", (d, i) => 3 * d) // we consider 3 times
+				   .attr("fill", "navy");
+				   .attr("fill", "navy")
+				   .attr("class", "bar")
+				   .append("title").text((d)=> d)
+			   
+	In SVG, the origin point for the coordinates is in the upper-left corner. An x coordinate of 0 places a shape on the left edge of the SVG area. A y coordinate of 0 places a shape on the top edge of the SVG area. Higher x values push the rectangle to the right. Higher y values push the rectangle down.
+
+	To make the bars right-side-up, you need to change the way the y coordinate is calculated. It needs to account for both the height of the bar and the total height of the SVG area.
+
+	The height of the SVG area is 100. If you have a data point of 0 in the set, you would want the bar to start at the bottom of the SVG area (not the top). To do this, the y coordinate needs a value of 100. If the data point value were 1, you would start with a y coordinate of 100 to set the bar at the bottom. Then you need to account for the height of the bar of 1, so the final y coordinate would be 99.
+
+	The y coordinate that is y = heightOfSVG - heightOfBar would place the bars right-side-up.
+	
+	
+	
+How to add labels
+
+	a text element needs to have x and y attributes, to place it on the SVG canvas. It also needs to access the data to display those values.
+
+	svg.selectAll("text")
+       .data(dataset)
+       .enter()
+       .append("text")
+       .attr("x", (d, i) => i * 30)
+       .attr("y",(d,i) => (h - 3 * d) - 3)
+       .text((d) => d)

@@ -64,3 +64,11 @@ var color = Math.floor(Math.random() * colors.length);
     },
     1000
   );
+  
+Place an element in center of the page (using CSS):
+#app{
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

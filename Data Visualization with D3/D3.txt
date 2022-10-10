@@ -4,6 +4,7 @@ D3 supports many different kinds of input data formats. Then, using its powerful
 
 Sample Example1:
 	<body>
+		<script src = "https://d3js.org/d3.v4.min.js"></script>
 	  <script>
 		// Add your code below this line
 		const anchor = d3.select("body").append("h1").text("Learning D3");

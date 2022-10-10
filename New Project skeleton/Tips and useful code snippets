@@ -1,4 +1,4 @@
-AJAX API CALL in js:
+//API CALL using AJAX in js:
 let quotesData;
 function getQuotes() {
   return $.ajax({
@@ -15,15 +15,18 @@ function getQuotes() {
   });
 }
 
+//API Call using D3.json(URL,function(){});
+d3.json('https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/master/GDP-data.json',function(data) { console.log(data); 
+});
 
-Twitter Share : add content to twitter posts dynamically
+//Twitter Share : add content to twitter posts dynamically
 $('#tweet-quote').attr(
     'href',
     'https://twitter.com/intent/tweet?hashtags=quotes&related=freecodecamp&text=' +
       encodeURIComponent('"' + currentQuote + '" ' + currentAuthor)
 );
 
-Tumblr Share: add content to tumblr post dynamically
+//Tumblr Share: add content to tumblr post dynamically
 $('#tumblr-quote').attr(
     'href',
     'https://www.tumblr.com/widgets/share/tool?posttype=quote&tags=quotes,freecodecamp&caption=' +
@@ -34,23 +37,23 @@ $('#tumblr-quote').attr(
   );
   
   
-Change Backgound color everytime:
-var colors = [
-  '#16a085',
-  '#27ae60',
-  '#2c3e50',
-  '#f39c12',
-  '#e74c3c',
-  '#9b59b6',
-  '#FB6964',
-  '#342224',
-  '#472E32',
-  '#BDBB99',
-  '#77B1A9',
-  '#73A857'
-];
+//Change Backgound color everytime:
+	var colors = [
+	  '#16a085',
+	  '#27ae60',
+	  '#2c3e50',
+	  '#f39c12',
+	  '#e74c3c',
+	  '#9b59b6',
+	  '#FB6964',
+	  '#342224',
+	  '#472E32',
+	  '#BDBB99',
+	  '#77B1A9',
+	  '#73A857'
+	];
 
-var color = Math.floor(Math.random() * colors.length);
+	var color = Math.floor(Math.random() * colors.length);
   $('html body').animate(
     {
       backgroundColor: colors[color],
@@ -65,10 +68,90 @@ var color = Math.floor(Math.random() * colors.length);
     1000
   );
   
-Place an element in center of the page (using CSS):
-#app{
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+//Place an element in center of the page (using CSS) 1:
+
+	* {
+	  margin: 0;
+	  padding: 0;
+	}
+
+	body{
+	  height: 100vh;
+	  width: 100vw;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	}
+
+	#main{
+	  height: 300px;
+	  width: 500px;
+	  align-self:center;
+	  font-family: 'Roboto';
+	  background-color: #708090;
+	  background-size: 64px 128px;
+	}
+
+//Place an element in center of the page (using CSS) 2:
+	#app{
+	  height: 200px;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  margin: auto;
+	}
+
+//simple Button style I:
+	button {
+    color: white;
+    background-color: #4791d0;
+    border-radius: 5px;
+    border: 1px solid #4791d0;
+    padding: 5px 10px 8px 10px;
+  }
+  button:hover {
+    background-color: #0F5897;
+    border: 1px solid #0F5897;
+  }
+  
+//Handle click events with javascript using the onclick property
+	document.addEventListener('DOMContentLoaded', function(){ });
+  
+//Get JSON with the JavaScript XMLHttpRequest Method
+	const req = new XMLHttpRequest();
+	req.open("GET",'/json/cats.json',true);
+	req.send();
+	req.onload = function(){
+	  const json = JSON.parse(req.responseText);
+	  document.getElementsByClassName('message')[0].innerHTML = JSON.stringify(json);
+	};
+
+//Get JSON with the JavaScript fetch() Method
+
+	fetch('/json/cats.json')
+		  .then(response => response.json())
+		  .then(data => {
+			document.getElementById('message').innerHTML = JSON.stringify(data);
+		  })
+		  
+//Get Geolocation Data to Find A User's GPS Coordinates
+
+	<script>
+	if (navigator.geolocation){
+	  navigator.geolocation.getCurrentPosition(function(position) {
+		document.getElementById('data').innerHTML="latitude: " + position.coords.latitude + "<br>longitude: " + position.coords.longitude;
+	  });
+	}
+	</script>
+	<h4>You are here:</h4>
+	<div id="data">
+
+	</div>
+
+/* NOTES:
+
+[ ] -> Square brackets represent an array.
+{ } -> Curly brackets represent an object.
+" " -> Double quotes represent a string. They are also used for key names in JSON.
+
+*/

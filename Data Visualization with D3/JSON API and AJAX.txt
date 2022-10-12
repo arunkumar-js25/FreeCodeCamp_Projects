@@ -14,7 +14,7 @@ Handle Click Events with JavaScript using the onclick property
 		//document.getElementsByClassName('message')[0].textContent="Here is the message";
 	  });
 	</script>
-	
+	 
 	<style>
 	  body {
 		text-align: center;

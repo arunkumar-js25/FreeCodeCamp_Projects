@@ -145,7 +145,7 @@ body {
 //Get JSON with the JavaScript fetch() Method
 
 	fetch('/json/cats.json')
-		  .then(response => response.json())
+		  .then(response => response.json()) 
 		  .then(data => {
 			document.getElementById('message').innerHTML = JSON.stringify(data);
 		  })

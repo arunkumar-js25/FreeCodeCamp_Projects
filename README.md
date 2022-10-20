@@ -20,8 +20,8 @@
 5. Cash Register
 
 ### Front End Development Libraries
-Build a Random Quote Machine
-Build a Markdown Previewer
-Build a Drum Machine
-Build a JavaScript Calculator
-Build a 25 + 5 Clock
+1. Build a Random Quote Machine
+2. Build a Markdown Previewer
+3. Build a Drum Machine
+4. Build a JavaScript Calculator
+5. Build a 25 + 5 Clock

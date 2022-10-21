@@ -1,0 +1,82 @@
+//Maintain Packages
+
+The package.json file is the center of any Node.js project or npm package. It stores information about your project, similar to how the <head> section of an HTML document describes the content of a webpage. It consists of a single JSON object where information is stored in key-value pairs. There are only two required fields; "name" and "version", but it’s good practice to provide additional information about your project that could be useful to future users or maintainers.
+
+To allow an npm dependency to update to the latest PATCH version, 
+	"package": "MAJOR.MINOR.PATCH"
+you can prefix the dependency’s version with the tilde (~) character. Here's an example of how to allow updates to any 1.3.x version.
+If you were to use the caret (^) as a version prefix instead, npm would be allowed to update to any 1.x.x version.
+
+			{
+			  "name": "fcc-learn-node-with-express",
+			  "description":"",
+			  "author": "",
+			  "keywords": [ "descriptive", "related", "words" ],
+			  /* Some common licenses for open source projects include MIT and BSD. License information is not required, and copyright laws in most countries will give you ownership of what you create by default. However, it’s always a good practice to explicitly state what users can and can’t do.*/
+			  "license":"MIT",
+			  
+			  /*A version is one of the required fields of your package.json file*/
+			  "version": "0.1.0",
+
+				/*
+				One of the biggest reasons to use a package manager, is their powerful dependency management. Instead of manually having to make sure that you get all dependencies whenever you set up a project on a new computer, npm automatically installs everything for you. But how can npm know exactly what your project needs? Meet the dependencies section of your package.json file.
+				*/
+			  
+			  "dependencies": {
+				"body-parser": "^1.15.2",  
+				"cookie-parser": "^1.4.3",
+				"dotenv": "^16.0.1",
+				"express": "^4.14.0",
+				"fcc-express-bground": "https://github.com/freeCodeCamp/fcc-express-bground-pkg.git"
+			  },
+			  "main": "server.js",
+			  "scripts": {
+				"start": "node server.js"
+			  }
+			}
+
+//Express Server
+
+1. create an Express app object
+	
+	let express = require('express');
+	let app = express();
+	
+	NOTE: One fundamental method is app.listen(port). It tells your server to listen on a given port, putting it in running state
+
+2. Routes takes the following structure: app.METHOD(PATH, HANDLER). 
+	
+	send(<str>)
+	sendfile(filePath) // __dirname + /views/index.html
+	
+	
+	METHOD is an http method in lowercase. PATH is a relative path on the server (it can be a string, or even a regular expression). 
+	HANDLER is a function that Express calls when the route is matched. 
+			Handlers take the form function(req, res) {...}, 
+			where req is the request object, and res is the response object. For example, the handler will serve the string 'Response String'.
+
+					function(req, res) {
+					  res.send('Response String');
+					}
+			
+	Syntax:
+	app.get('/', function (req, res) {  
+	  res.send('Response String');  
+	}); 
+	
+	app.get('/', function (req, res) {  
+	  res.sendFile(__dirname+'/views/index.html');    
+	  //We recommend you to use the Node global variable __dirname to calculate the path like this: absolutePath = __dirname + relativePath/file.ext
+	}); 
+	
+3. Middleware
+	
+	Basically, middleware are functions that intercept route handlers, adding some kind of information. 
+	A middleware needs to be mounted using the method app.use(path, middlewareFunction). 
+			The first path argument is optional. If you don’t pass it, the middleware will be executed for all requests.
+			
+			// Normal usage
+			app.use(express.static(__dirname + "/public"));
+
+			// Assets at the /public route
+			app.use("/public", express.static(__dirname + "/public"));

@@ -207,7 +207,7 @@ use Dynamic scales to fit all scatterplot data inside svg:
 
     const yScale = d3.scaleLinear()
                     .domain([0, d3.max(dataset, (d) => d[1])])
-                    .range([h-padding, padding]);;
+                    .range([h-padding, padding]);
 
 
     // Add your code above this line

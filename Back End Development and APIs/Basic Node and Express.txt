@@ -34,8 +34,12 @@ If you were to use the caret (^) as a version prefix instead, npm would be allow
 				"start": "node server.js"
 			  }
 			}
+			
+			
+//Node.js is a JavaScript runtime that allows developers to write backend (server-side) programs in JavaScript. Node.js comes with a handful of built-in modules — small, independent programs — that help with this. Some of the core modules include HTTP, which acts like a server, and File System, a module to read and modify files.
 
 //Express Server
+Express is a lightweight web application framework, and is one of the most popular packages on npm. Express makes it much easier to create a server and handle routing for your application, which handles things like directing people to the correct page when they visit a certain endpoint like /blog.
 
 1. create an Express app object
 	
@@ -46,9 +50,10 @@ If you were to use the caret (^) as a version prefix instead, npm would be allow
 
 2. Routes takes the following structure: app.METHOD(PATH, HANDLER). 
 	
-	send(<str>)
-	sendfile(filePath) // __dirname + /views/index.html
-	
+	res.send(<str>)
+	res.sendfile(filePath) // __dirname + /views/index.html
+	res.json()	//json data   
+				//Behind the scenes, it converts a valid JavaScript object into a string, then sets the appropriate headers to tell your browser that you are serving JSON, and sends the data back.
 	
 	METHOD is an http method in lowercase. PATH is a relative path on the server (it can be a string, or even a regular expression). 
 	HANDLER is a function that Express calls when the route is matched. 
@@ -80,3 +85,22 @@ If you were to use the caret (^) as a version prefix instead, npm would be allow
 
 			// Assets at the /public route
 			app.use("/public", express.static(__dirname + "/public"));
+			
+4. Env
+	
+	The .env file is a hidden file that is used to pass environment variables to your application. This file is secret, no one but you can access it, and it can be used to store data that you want to keep private or hidden. For example, you can store API keys from external services or your database URI. You can also use it to store configuration options. By setting configuration options, you can change the behavior of your application, without the need to rewrite some code.
+	
+	The environment variables are accessible from the app as process.env.VAR_NAME. The process.env object is a global Node object, and variables are passed as strings. By convention, the variable names are all uppercase, with words separated by an underscore. The .env is a shell file, so you don’t need to wrap names or values in quotes. It is also important to note that there cannot be space around the equals sign when you are assigning values to your variables, e.g. VAR_NAME=value. Usually, you will put each variable definition on a separate line.
+	
+	Note: If you are using Replit, you cannot create a .env file. Instead, use the built-in SECRETS tab to add the variable
+	
+	If you are working locally, you will need the dotenv package. It loads environment variables from your .env file into process.env. The dotenv package has already been installed, and is in your project's package.json file. At the top of your myApp.js file, import and load the variables with require('dotenv').config().
+
+			app.get('/json', function (req, res) { 
+			  let msg="Hello json";
+			  if(process.env.MESSAGE_STYLE == "uppercase")
+			  {
+				msg = msg.toUpperCase();
+			  }
+			  res.json({"message": msg});  
+			}); 

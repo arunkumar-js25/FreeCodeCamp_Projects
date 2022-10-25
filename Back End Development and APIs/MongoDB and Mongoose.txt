@@ -1,5 +1,8 @@
 MongoDB and Mongoose
 
+#Things to Remember
+MongoDB - login via Github
+
 Installation: https://www.freecodecamp.org/news/get-started-with-mongodb-atlas/
 
 	Create a MongoDB Atlas Account
@@ -74,4 +77,4 @@ Example Github; https://github.com/freeCodeCamp/boilerplate-mongomongoose/
 BLOG::https://www.freecodecamp.org/news/introduction-to-mongoose-for-mongodb-d2a7aa593c57/
 2. Create a Model >> CRUD Part I - CREATE
 
-	First of all, we need a Schema. Each schema maps to a MongoDB collection. It defines the shape of the documents within that collection. Schemas are building blocks for Models. They can be nested to create complex models, but in this case, we'll keep things simple. A model allows you to create instances of your objects, called documents.
+	First of all, we need a Schema. Each schema maps to a MongoDB collection. It defines the shape of the documents within that collection. Schemas are building blocks for Models. They can be nested to create complex models, but in this case, we'll keep things simple. A model allows you to create instances of your objects, called documents. 

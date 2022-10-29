@@ -2,6 +2,9 @@ D3, or D3.js, stands for Data Driven Documents. It's a JavaScript library for cr
 D3 is built to work with common web standards – namely HTML, CSS, and Scalable Vector Graphics (SVG).
 D3 supports many different kinds of input data formats. Then, using its powerful built-in methods, you can transform those data into different charts, graphs, and maps.
 
+
+https://github.com/d3/d3/blob/main/API.md#axes-d3-axis
+
 Sample Example1:
 	<body>
 		<script src = "https://d3js.org/d3.v4.min.js"></script>

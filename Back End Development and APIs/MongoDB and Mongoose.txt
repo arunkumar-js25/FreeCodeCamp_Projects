@@ -78,3 +78,86 @@ BLOG::https://www.freecodecamp.org/news/introduction-to-mongoose-for-mongodb-d2a
 2. Create a Model >> CRUD Part I - CREATE
 
 	First of all, we need a Schema. Each schema maps to a MongoDB collection. It defines the shape of the documents within that collection. Schemas are building blocks for Models. They can be nested to create complex models, but in this case, we'll keep things simple. A model allows you to create instances of your objects, called documents. 
+	
+	Mongoose is an Object Data Modeling (ODM) library for MongoDB and Node.js. It manages relationships between data, provides schema validation, and is used to translate between objects in code and the representation of those objects in MongoDB.
+	
+	https://www.freecodecamp.org/news/introduction-to-mongoose-for-mongodb-d2a7aa593c57/
+	
+	let mongoose = require('mongoose')
+	let validator = require('validator')
+
+	let emailSchema = new mongoose.Schema({   //NEW SCHEMA
+	  email: { 								 //DEFINE COLUMN
+		type: String,
+		required: true,
+		unique: true,
+		lowercase: true,
+		validate: (value) => {
+		  return validator.isEmail(value)
+		}
+	  }
+	})
+	module.exports = mongoose.model('Email', emailSchema) //CREATE INSTANCE OF A MODEL
+	
+	The following Schema Types are permitted:
+
+		Array
+		Boolean
+		Buffer
+		Date
+		Mixed (A generic / flexible data type)
+		Number
+		ObjectId
+		String
+		Mixed and ObjectId are defined under require(‘mongoose’).Schema.Types.
+			
+	EXAMPLE:
+	
+		const personSchema = new mongoose.Schema({
+			name : {
+			  type: String,
+			  required: true
+			},
+			age : {
+			  type: Number
+			},
+			favoriteFoods : {
+			  type: [String]
+			}
+		});
+
+		let Person = mongoose.model("Person", personSchema);
+	
+	
+	
+3. Create and Save a Record of a Model
+		call the method document.save() on the returned document instance. Pass to it a callback using the Node convention. This is a common pattern; all the following CRUD methods take a callback function like this as the last argument.
+	
+		let personDetail = new Person({
+			name:"arun", age:20, favoriteFoods:["briyani","dosa"]
+		})
+		  
+		personDetail.save(function(err, data) {
+			if (err) return console.error(err);
+			done(null, data);
+		});
+	
+	
+	
+	
+	
+Terminologies
+Collections
+‘Collections’ in Mongo are equivalent to tables in relational databases. They can hold multiple JSON documents.
+
+Documents
+‘Documents’ are equivalent to records or rows of data in SQL. While a SQL row can reference data in other tables, Mongo documents usually combine that in a document.
+
+Fields
+‘Fields’ or attributes are similar to columns in a SQL table.
+
+Schema
+While Mongo is schema-less, SQL defines a schema via the table definition. A Mongoose ‘schema’ is a document data structure (or shape of the document) that is enforced via the application layer.
+
+Models
+‘Models’ are higher-order constructors that take a schema and create an instance of a document equivalent to records in a relational database.

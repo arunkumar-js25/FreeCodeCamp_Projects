@@ -143,7 +143,27 @@ BLOG::https://www.freecodecamp.org/news/introduction-to-mongoose-for-mongodb-d2a
 		});
 	
 	
+4. Model Commands: https://mongoosejs.com/docs/api/model.html
+
+	Person.create(arrayOfPeople,function(err, data) {
+		if (err) return console.error(err);
+		done(null, data);
+	});
 	
+	Person.find({name:personName},function(err, data) {
+		if (err) return console.error(err);
+		done(null, data);
+	});
+	
+	Person.findOne({favoriteFoods:[food]},function(err, data) {
+		if (err) return console.error(err);
+		done(null, data);
+	});
+  
+	Person.findById(personId,function(err, data) {
+		if (err) return console.error(err);
+		done(null, data);
+	});
 	
 	
 Terminologies

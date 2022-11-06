@@ -207,3 +207,88 @@ While Mongo is schema-less, SQL defines a schema via the table definition. A Mon
 
 Models
 ‘Models’ are higher-order constructors that take a schema and create an instance of a document equivalent to records in a relational database.
+
+
+
+
+Multer:
+	Multer is a Node.js middleware used for handling multipart/form-data, which is primarily used for uploading files.
+	https://www.section.io/engineering-education/uploading-files-using-multer-nodejs/
+	
+	Important points  :: In the form tag, the enctype attribute must be set to multipart/form-data, for Multer to work.
+	
+	Write this command in your terminal:	npm i multer
+	
+	After installing the package, we will import it at the top of the app.js file:
+	const multer = require("multer");
+	
+	Then we will start by creating an API endpoint to upload the file, just above the previous one.
+	Note: Make sure that the endpoint used to render the page is at the end of all the API endpoints.
+
+	//API Endpoint for uploading file
+	app.post("/api/uploadFile", (req, res) => {
+	  // Stuff to be added later
+	});
+
+	//Configuration for Multer
+	const upload = multer({ dest: "public/files" });
+	
+	In this code, we are calling the multer function that takes certain options as arguments. We pass the dest (destination) option and the value of dest will be:public/files.
+
+	After that, we have to use this upload variable as the middleware in the API endpoint created above.
+
+	Change that API endpoint to this:
+
+	app.post("/api/uploadFile", upload.single("myFile"), (req, res) => {
+	  // Stuff to be added later
+	  console.log(req.file);
+	});
+	Here, upload.single is again a function. The single determines that only a single file is to be uploaded. In the case of there being many files, we can use multiple instead of single.
+	
+	
+	Configuring Multer
+	Now, we can start configuring Multer in a more complex way and we will do that in two parts:
+
+	Configuring the disk storage and naming the uploaded files.
+	To do this, replace the previous one-liner code for configuration with this code:
+
+	Delete this:
+
+	//Configuration for Multer
+	const upload = multer({ dest: "public/files" });
+	
+	Now write this:
+	
+	//Configuration for Multer
+	const multerStorage = multer.diskStorage({
+	  destination: (req, file, cb) => {
+		cb(null, "public");
+	  },
+	  filename: (req, file, cb) => {
+		const ext = file.mimetype.split("/")[1];
+		cb(null, `files/admin-${file.fieldname}-${Date.now()}.${ext}`);
+	  },
+	});
+	
+	Multer has an in-built method called diskStorage and it takes a couple of options. The first option is again the destination, but we cannot simply set it as we did before.
+	The destination option is a callback function that takes three arguments:
+		req, which is the incoming request object.
+		file, which is the incoming file object (that we saw in the terminal a bit before).
+		cb, which is again another callback function.
+
+	We call the cb function that takes the two arguments. The first is error which we are going to pass null to. The second is the destination folder which is public.
+
+	The second option that this method takes is the filename. It is almost the same as the destination option except in this, the inner callback function takes the filename as the second argument.
+
+	So, you can see that I have created a unique filename for this using the template string in JavaScript. You can refer to the file object that we logged in to our terminal earlier. I have taken the extension from the mimetype property of the file object and also the fieldname.
+
+	Congratulations. We have completed the first step of configuring Multer. Next, we will make a filter to filter out different kinds of files. I will make a filter to only allow the upload of PDF files. You can make your own filter by referring to the code below:
+
+	// Multer Filter
+	const multerFilter = (req, file, cb) => {
+	  if (file.mimetype.split("/")[1] === "pdf") {
+		cb(null, true);
+	  } else {
+		cb(new Error("Not a PDF File!!"), false);
+	  }
+	};

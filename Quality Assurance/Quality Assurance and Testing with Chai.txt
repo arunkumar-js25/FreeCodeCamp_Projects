@@ -1,0 +1,225 @@
+CHAI.js  => https://www.chaijs.com/guide/
+	Chai is a JavaScript testing library that helps you confirm that your program still behaves the way you expect it to after you make changes to your code.
+	Using Chai, you can write tests that describe your program's requirements and see if your program meets them.
+	
+	const chai = require('chai');
+	const assert = chai.assert;
+	
+	suite('Unit Tests', function () {  //SUITE
+		test('Name/Description', function () {  //TEST FUNCTION
+		  assert.isNull(null, 'This is an optional error description - e.g. null is null');
+		  assert.isNotNull(1, '1 is not null');
+		});
+		
+		suite('Comparisons', function () {  //INNER SUITE
+		// #8
+		test('Name/Description', function () {
+		  assert.isAtMost('hello'.length, 5);
+		  assert.isAbove(1, 0);
+		  assert.isAbove(Math.PI, 3);
+		  assert.isAtMost(1 - Math.random(), 1);
+		});
+	}
+	
+	
+	Unit Tests
+    Basic Assertions
+      ✔ #isNull, #isNotNull
+      ✔ #isDefined, #isUndefined
+      ✔ #isOk, #isNotOk
+      ✔ #isTrue, #isNotTrue
+    Equality
+      ✔ #equal, #notEqual
+      ✔ #strictEqual, #notStrictEqual
+      ✔ #deepEqual, #notDeepEqual
+    Comparisons
+      ✔ #isAbove, #isAtMost
+      ✔ #isBelow, #isAtLeast
+      ✔ #approximately
+    Arrays
+      ✔ #isArray, #isNotArray
+      ✔ Array #include, #notInclude
+    Strings
+      ✔ #isString, #isNotString
+      ✔ String #include, #notInclude
+      ✔ #match, #notMatch
+    Objects
+      ✔ #property, #notProperty
+      ✔ #typeOf, #notTypeOf
+      ✔ #instanceOf, #notInstanceOf
+
+/**************************************************************************************************************************************************************************/
+CHAIHTTP.js - https://www.chaijs.com/plugins/chai-http/
+
+const chai = require('chai');
+const assert = chai.assert;
+
+const server = require('../index');
+			
+		SERVER - index.js
+			const express = require('express');
+			const app = express();
+			const cors = require('cors');
+			const runner = require('./test-runner');
+			const bodyParser = require('body-parser');
+			app.use(bodyParser.json());
+
+			app.get('/', function (req, res) {
+			  res.sendFile(__dirname + '/views/index.html');
+			})
+
+			app.use(express.static(__dirname + '/public'));
+
+			app.get('/hello', function (req, res) {
+			  const name = req.query.name || 'Guest';
+			  res.type('txt').send('hello ' + name);
+			})
+			
+			app.route('/travellers')
+			.put(function (req, res) {
+				  let data = {};
+				  if (req.body && req.body.surname) 
+				  { 
+					...
+				  }
+				  res.json(data); 
+				});
+			
+			const port = process.env.PORT || 3000;
+			app.listen(port, function () {
+			  console.log("Listening on port " + port);
+			  console.log('Running Tests...');
+			  setTimeout(function () {
+				try {
+				  runner.run();
+				} catch (e) {
+				  error = e;
+				  console.log('Tests are not valid:');
+				  console.log(error);
+				}
+			  }, 1500);
+			});
+			
+const chaiHttp = require('chai-http');
+chai.use(chaiHttp);
+
+  Functional Tests
+    Integration tests with chai-http
+      ✔ Test GET /hello with no name
+      ✔ Test GET /hello with your name
+      ✔ Send {surname: "Colombo"}
+      ✔ Send {surname: "da Verrazzano"}
+
+
+	suite('Functional Tests', function () {
+	  this.timeout(5000);
+	  suite('Integration tests with chai-http', function () {
+		// #1
+		test('Test GET /hello with no name', function (done) {
+		  chai
+			.request(server)
+			.get('/hello')
+			.end(function (err, res) {
+			  assert.equal(res.status, 200);
+			  assert.equal(res.text, 'hello Guest');
+			  done();
+			});
+		});
+		
+		test('Send {surname: "da Verrazzano"}', function (done) {
+		  chai
+			.request(server) //REQUEST - CALL SERVER (hostName / App exported)
+			.put('/travellers')  // PUT METHOD
+			.send({ surname: 'da Verrazzano' })  //REQ BODY
+			.end(function (err, res) {
+			  assert.equal(res.status, 200);
+			  assert.equal(res.type, 'application/json');
+			  assert.equal(res.body.name,'Giovanni');
+			  assert.equal(res.body.surname,'da Verrazzano');
+		
+			  done();
+			});
+		});
+	  });
+	});
+
+
+/**************************************************************************************************************************************************************************/
+ZOMBIE.JS
+	Headless browsers are web browsers without a GUI. They are able to render and interpret HTML, CSS, and JavaScript the same way a regular browser would, making them particularly useful for testing web pages.
+
+	For the following challenges you'll use Zombie.js, which is a lightweight headless browser that doesn't rely on additional binaries to be installed. This feature makes it usable in limited environments like Replit. But there are many other, more powerful headless browser options.
+
+	Mocha allows you to run some code before any of the actual tests run. This can be useful to do things like add entries to a database which will be used in the rest of the tests.
+	With a headless browser, before running tests, you need to visit the page you'll test.
+
+	The suiteSetup hook is executed only once at the beginning of a test suite.
+	There are several other hook types that can execute code before each test, after each test, or at the end of a test suite. See the Mocha docs for more information.
+
+	Functional Tests with Zombie.js
+		Headless browser
+		  ✔ should have a working "site" property
+		"Famous Italian Explorers" form
+		  ✔ Submit the surname "Colombo" in the HTML form (413ms)
+		  ✔ Submit the surname "Vespucci" in the HTML form (464ms)
+
+	On the page there's an input form. It sends data to the PUT /travellers endpoint as an AJAX request.
+	When the request successfully completes, the client code appends a <div> containing the information in the response to the DOM.
+
+	Here's an example of how to use Zombie.js to interact with the form:
+
+		test('Submit the surname "Polo" in the HTML form', function (done) {
+		  browser.fill('surname', 'Polo').then(() => {
+			browser.pressButton('submit', () => {
+			  browser.assert.success();
+			  browser.assert.text('span#name', 'Marco');
+			  browser.assert.text('span#surname', 'Polo');
+			  browser.assert.elements('span#dates', 1);
+			  done();
+			});
+		  });
+		});
+		
+	First, the fill method of the browser object fills the surname field of the form with the value 'Polo'. fill returns a promise, so then is chained off of it.
+	Within the then callback, the pressButton method of the browser object is used to invoke the form's submit event listener. The pressButton method is asynchronous.
+	Then, once a response is received from the AJAX request, a few assertions are made confirming:
+
+	The status of the response is 200
+	The text within the <span id='name'></span> element matches 'Marco'
+	The text within the <span id='surname'></span> element matches 'Polo'
+	There is 1 <span id='dates'></span> element.
+
+	Finally, the done callback is invoked, which is needed due to the asynchronous test.
+	
+	
+	const Browser = require('zombie');
+	Browser.site = 'https://ak-fcc-mochachai.arunkumar-js25.repl.co';
+
+	suite('Functional Tests with Zombie.js', function () {
+	  this.timeout(100000);  //TIMEOUT
+	  const browser = new Browser();
+	  suiteSetup(function(done) {
+		return browser.visit('/',done);   //BROWSER VISIT FOR ZOMBIE
+	  });
+
+	  suite('Headless browser', function () {
+		test('should have a working "site" property', function()   {
+		  assert.isNotNull(browser.site);
+		});
+	  });
+
+	  suite('"Famous Italian Explorers" form', function () {
+		// #5
+		test('Submit the surname "Colombo" in the HTML form', function (done) {
+		  browser.fill('surname', 'Colombo').then(() => {
+			browser.pressButton('submit', function(){
+			  browser.assert.success();
+			  browser.assert.text('span#name', 'Cristoforo');
+			  browser.assert.text('span#surname', 'Colombo');
+			  browser.assert.elements('span#dates', 1);
+			  done();
+			});
+		  });
+		});
+	  });
+	});

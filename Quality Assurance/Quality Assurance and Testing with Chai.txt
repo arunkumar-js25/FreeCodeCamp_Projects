@@ -145,7 +145,7 @@ chai.use(chaiHttp);
 
 
 /**************************************************************************************************************************************************************************/
-ZOMBIE.JS
+ZOMBIE.JS  - http://zombie.js.org/
 	Headless browsers are web browsers without a GUI. They are able to render and interpret HTML, CSS, and JavaScript the same way a regular browser would, making them particularly useful for testing web pages.
 
 	For the following challenges you'll use Zombie.js, which is a lightweight headless browser that doesn't rely on additional binaries to be installed. This feature makes it usable in limited environments like Replit. But there are many other, more powerful headless browser options.

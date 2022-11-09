@@ -247,3 +247,232 @@ Set up Passport
 		  return done(null, false);
 		}
 		That is all it takes to implement one of the most important security features when you have to store passwords.
+		
+		
+		
+	Implementation of Social Authentication
+		I
+			The basic path this kind of authentication will follow in your app is:
+
+			User clicks a button or link sending them to your route to authenticate using a specific strategy (e.g. GitHub).
+			Your route calls passport.authenticate('github') which redirects them to GitHub.
+			The page the user lands on, on GitHub, allows them to login if they aren't already. It then asks them to approve access to their profile from your app.
+			The user is then returned to your app at a specific callback url with their profile if they are approved.
+			They are now authenticated, and your app should check if it is a returning profile, or save it in your database if it is not.
+			Strategies with OAuth require you to have at least a Client ID and a Client Secret which is a way for the service to verify who the authentication request is coming from and if it is valid. These are obtained from the site you are trying to implement authentication with, such as GitHub, and are unique to your app--THEY ARE NOT TO BE SHARED and should never be uploaded to a public repository or written directly in your code. A common practice is to put them in your .env file and reference them like so: process.env.GITHUB_CLIENT_ID. For this challenge you are going to use the GitHub strategy.
+
+			https://www.freecodecamp.org/news/how-to-set-up-a-github-oauth-application/
+			
+			Follow these instructions to obtain your Client ID and Secret from GitHub. Set the homepage URL to your Replit homepage (not the project code's URL), and set the callback URL to the same homepage URL with /auth/github/callback appended to the end. Save the client ID and your client secret in your project's .env file as GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET. 
+			
+			This part of setting up your GitHub authentication is to create the strategy itself. 
+		
+		
+		II 
+			passport-github@~1.1.0 has already been added as a dependency, so require it in your auth.js file as GithubStrategy like this: 
+			const GitHubStrategy = require('passport-github').Strategy;. Do not forget to require and configure dotenv to use your environment variables.
+
+			To set up the GitHub strategy, you have to tell Passport to use an instantiated GitHubStrategy, which accepts 2 arguments: an object (containing clientID, clientSecret, and callbackURL) and a function to be called when a user is successfully authenticated, which will determine if the user is new and what fields to save initially in the user's database object. This is common across many strategies, but some may require more information as outlined in that specific strategy's GitHub README. For example, Google requires a scope as well which determines what kind of information your request is asking to be returned and asks the user to approve such access.
+
+			The current strategy you are implementing authenticates users using a GitHub account and OAuth 2.0 tokens. The client ID and secret obtained when creating an application are supplied as options when creating the strategy. The strategy also requires a verify callback, which receives the access token and optional refresh token, as well as profile which contains the authenticated user's GitHub profile. The verify callback must call cb providing a user to complete authentication.
+
+			Here's how your new strategy should look at this point:
+
+			passport.use(new GitHubStrategy({
+			  clientID: process.env.GITHUB_CLIENT_ID,
+			  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+			  callbackURL: /*INSERT CALLBACK URL ENTERED INTO GITHUB HERE*/
+			},
+			  function(accessToken, refreshToken, profile, cb) {
+				console.log(profile);
+				//Database logic here with callback containing your user object
+			  }
+			));
+			Your authentication won't be successful yet, and it will actually throw an error without the database logic and callback, but it should log your GitHub profile to your console if you try it!
+			
+			
+		III
+			The final part of the strategy is handling the profile returned from GitHub. We need to load the user's database object if it exists, or create one if it doesn't, and populate the fields from the profile, then return the user's object. GitHub supplies us a unique id within each profile which we can use to search with to serialize the user with (already implemented). Below is an example implementation you can use in your project--it goes within the function that is the second argument for the new strategy, right below where console.log(profile); currently is:
+
+				myDataBase.findOneAndUpdate(
+				  { id: profile.id },
+				  {
+					$setOnInsert: {
+					  id: profile.id,
+					  username: profile.username,
+					  name: profile.displayName || 'John Doe',
+					  photo: profile.photos[0].value || '',
+					  email: Array.isArray(profile.emails)
+						? profile.emails[0].value
+						: 'No public email',
+					  created_on: new Date(),
+					  provider: profile.provider || ''
+					},
+					$set: {
+					  last_login: new Date()
+					},
+					$inc: {
+					  login_count: 1
+					}
+				  },
+				  { upsert: true, new: true },
+				  (err, doc) => {
+					return cb(null, doc.value);
+				  }
+				);
+			findOneAndUpdate allows you to search for an object and update it. If the object doesn't exist, it will be inserted and made available to the callback function. In this example, we always set last_login, increment the login_count by 1, and only populate the majority of the fields when a new object (new user) is inserted. Notice the use of default values. Sometimes a profile returned won't have all the information filled out or the user will keep it private. In this case, you handle it to prevent an error.
+
+			You should be able to login to your app now. Try it!
+			
+			
+Setting Up Chat
+	Set up the Environment
+		
+		The following challenges will make use of the chat.pug file. So, in your routes.js file, add a GET route pointing to /chat which makes use of ensureAuthenticated, and renders chat.pug, with { user: req.user } passed as an argument to the response. Now, alter your existing /auth/github/callback route to set the req.session.user_id = req.user.id, and redirect to /chat.
+
+		socket.io@~2.3.0 has already been added as a dependency, so require/instantiate it in your server as follows with http (comes built-in with Nodejs):
+
+		const http = require('http').createServer(app);
+		const io = require('socket.io')(http);
+		Now that the http server is mounted on the express app, you need to listen from the http server. Change the line with app.listen to http.listen.
+
+		The first thing needing to be handled is listening for a new connection from the client. The on keyword does just that- listen for a specific event. It requires 2 arguments: a string containing the title of the event that's emitted, and a function with which the data is passed through. In the case of our connection listener, use socket to define the data in the second argument. A socket is an individual client who is connected.
+
+		To listen for connections to your server, add the following within your database connection:
+
+		io.on('connection', socket => {
+		  console.log('A user has connected');
+		});
+		Now for the client to connect, you just need to add the following to your client.js which is loaded by the page after you've authenticated:
+
+		/*global io*/
+		let socket = io();
+		The comment suppresses the error you would normally see since 'io' is not defined in the file. You have already added a reliable CDN to the Socket.IO library on the page in chat.pug.
+
+		Now try loading up your app and authenticate and you should see in your server console A user has connected.
+
+	Note:io() works only when connecting to a socket hosted on the same url/server. For connecting to an external socket hosted elsewhere, you would use io.connect('URL');.
+	
+	
+	Communicate by Emitting
+		Emit is the most common way of communicating you will use. When you emit something from the server to 'io', you send an event's name and data to all the connected sockets. A good example of this concept would be emitting the current count of connected users each time a new user connects!
+
+		Start by adding a variable to keep track of the users, just before where you are currently listening for connections.
+
+		let currentUsers = 0;
+		Now, when someone connects, you should increment the count before emitting the count. So, you will want to add the incrementer within the connection listener.
+
+		++currentUsers;
+		Finally, after incrementing the count, you should emit the event (still within the connection listener). The event should be named 'user count', and the data should just be the currentUsers.
+
+		io.emit('user count', currentUsers);
+		Now, you can implement a way for your client to listen for this event! Similar to listening for a connection on the server, you will use the on keyword.
+
+		socket.on('user count', function(data) {
+		  console.log(data);
+		});
+		Now, try loading up your app, authenticate, and you should see in your client console '1' representing the current user count! Try loading more clients up, and authenticating to see the number go up.
+		
+		
+	Handle a Disconnect
+		You may notice that up to now you have only been increasing the user count. Handling a user disconnecting is just as easy as handling the initial connect, except you have to listen for it on each socket instead of on the whole server.
+
+		To do this, add another listener inside the existing 'connect' listener that listens for 'disconnect' on the socket with no data passed through. You can test this functionality by just logging that a user has disconnected to the console.
+
+		socket.on('disconnect', () => {
+		  /*anything you want to do on disconnect*/
+		});
+		To make sure clients continuously have the updated count of current users, you should decrease currentUsers by 1 when the disconnect happens then emit the 'user count' event with the updated count.
+
+		Note: Just like 'disconnect', all other events that a socket can emit to the server should be handled within the connecting listener where we have 'socket' defined.
+		
+		
+	Authentication with Socket.IO
+		Currently, you cannot determine who is connected to your web socket. While req.user contains the user object, that's only when your user interacts with the web server, and with web sockets you have no req (request) and therefore no user data. One way to solve the problem of knowing who is connected to your web socket is by parsing and decoding the cookie that contains the passport session then deserializing it to obtain the user object. Luckily, there is a package on NPM just for this that turns a once complex task into something simple!
+
+		passport.socketio@~3.7.0, connect-mongo@~3.2.0, and cookie-parser@~1.4.5 have already been added as dependencies. Require them as passportSocketIo, MongoStore, and cookieParser respectively. Also, we need to initialize a new memory store, from express-session which we previously required. It should look like this:
+
+			const MongoStore = require('connect-mongo')(session);
+			const URI = process.env.MONGO_URI;
+			const store = new MongoStore({ url: URI });
+		
+		Now we just have to tell Socket.IO to use it and set the options. Be sure this is added before the existing socket code and not in the existing connection listener. For your server, it should look like this:
+
+			io.use(
+			  passportSocketIo.authorize({
+				cookieParser: cookieParser,
+				key: 'express.sid',
+				secret: process.env.SESSION_SECRET,
+				store: store,
+				success: onAuthorizeSuccess,
+				fail: onAuthorizeFail
+			  })
+			);
+			
+		Note that configuring Passport authentication for Socket.IO is very similar to the way we configured the session middleware for the API. This is because they are meant to use the same authentication method — get the session id from a cookie and validate it.
+
+		Previously, when we configured the session middleware, we didn't explicitly set the cookie name for session (key). This is because the session package was using the default value. Now that we've added another package which needs access to the same value from the cookies, we need to explicitly set the key value in both configuration objects.
+
+		Be sure to add the key with the cookie name to the session middleware that matches the Socket.IO key. Also, add the store reference to the options, near where we set saveUninitialized: true. This is necessary to tell Socket.IO which session to relate to.
+
+		Now, define the success, and fail callback functions:
+
+			function onAuthorizeSuccess(data, accept) {
+			  console.log('successful connection to socket.io');
+
+			  accept(null, true);
+			}
+
+			function onAuthorizeFail(data, message, error, accept) {
+			  if (error) throw new Error(message);
+			  console.log('failed connection to socket.io:', message);
+			  accept(null, false);
+			}
+			
+		The user object is now accessible on your socket object as socket.request.user. For example, now you can add the following:
+
+			console.log('user ' + socket.request.user.username + ' connected');
+			
+		It will log to the server console who has connected!
+		
+	Announce New Users
+		
+		Many chat rooms are able to announce when a user connects or disconnects and then display that to all of the connected users in the chat. Seeing as though you already are emitting an event on connect and disconnect, you will just have to modify this event to support such a feature. The most logical way of doing so is sending 3 pieces of data with the event: the username of the user who connected/disconnected, the current user count, and if that username connected or disconnected.
+
+		Change the event name to 'user', and pass an object along containing the fields username, currentUsers, and connected (to be true in case of connection, or false for disconnection of the user sent). Be sure to change both 'user count' events and set the disconnect one to send false for the field connected instead of true like the event emitted on connect.
+
+			io.emit('user', {
+			  username: socket.request.user.username,
+			  currentUsers,
+			  connected: true
+			});
+		
+		Now your client will have all the necessary information to correctly display the current user count and announce when a user connects or disconnects! To handle this event on the client side we should listen for 'user', then update the current user count by using jQuery to change the text of #num-users to '{NUMBER} users online', as well as append a <li> to the unordered list with id messages with '{NAME} has {joined/left} the chat.'.
+
+		An implementation of this could look like the following:
+
+			socket.on('user', data => {
+			  $('#num-users').text(data.currentUsers + ' users online');
+			  let message =
+				data.username +
+				(data.connected ? ' has joined the chat.' : ' has left the chat.');
+			  $('#messages').append($('<li>').html('<b>' + message + '</b>'));
+			});
+			
+			
+	Send and Display Chat Messages
+		It's time you start allowing clients to send a chat message to the server to emit to all the clients! In your client.js file, you should see there is already a block of code handling when the message form is submitted.
+
+			$('form').submit(function() {
+			  /*logic*/
+			});
+		
+		Within the form submit code, you should emit an event after you define messageToSend but before you clear the text box #m. The event should be named 'chat message' and the data should just be messageToSend.
+
+			socket.emit('chat message', messageToSend);
+		
+		Now, on your server, you should be listening to the socket for the event 'chat message' with the data being named message. Once the event is received, it should emit the event 'chat message' to all sockets using io.emit, sending a data object containing the username and message.
+
+		In client.js, you should now listen for event 'chat message' and, when received, append a list item to #messages with the username, a colon, and the message!
+
+		At this point, the chat should be fully functional and sending messages across all clients!

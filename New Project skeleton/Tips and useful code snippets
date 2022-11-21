@@ -192,3 +192,11 @@ body {
 	app.listen(PORT, () => {
 	  console.log('Listening on port ' + PORT);
 	});
+
+//Mocha - Start the app automatically on any changes made
+
+"scripts": {
+    "start": "nodemon server.js",
+    "test": "mocha --timeout 5000 --require @babel/register --recursive --exit --ui tdd tests/"
+  },
+  

@@ -127,18 +127,18 @@ chai.use(chaiHttp);
 		});
 		
 		test('Send {surname: "da Verrazzano"}', function (done) {
-		  chai
-			.request(server) //REQUEST - CALL SERVER (hostName / App exported)
-			.put('/travellers')  // PUT METHOD
-			.send({ surname: 'da Verrazzano' })  //REQ BODY
-			.end(function (err, res) {
-			  assert.equal(res.status, 200);
-			  assert.equal(res.type, 'application/json');
-			  assert.equal(res.body.name,'Giovanni');
-			  assert.equal(res.body.surname,'da Verrazzano');
-		
-			  done();
-			});
+			  chai
+				.request(server) //REQUEST - CALL SERVER (hostName / App exported)
+				.put('/travellers')  // PUT METHOD
+				.send({ surname: 'da Verrazzano' })  //REQ BODY
+				.end(function (err, res) {
+				  assert.equal(res.status, 200);
+				  assert.equal(res.type, 'application/json');
+				  assert.equal(res.body.name,'Giovanni');
+				  assert.equal(res.body.surname,'da Verrazzano');
+			
+				  done();
+				});
 		});
 	  });
 	});

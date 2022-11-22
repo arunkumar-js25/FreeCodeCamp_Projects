@@ -1,0 +1,67 @@
+HelmetJS
+
+This programming course focuses on HelmetJS, a type of middleware for Express-based applications that automatically sets HTTP headers. This way it can prevent sensitive information from unintentionally being passed between the server and client.
+
+Helmet.js is a Node.js module that helps in securing HTTP headers. It is implemented in express applications. Therefore, we can say that helmet.js helps in securing express applications. It sets up various HTTP headers to prevent attacks like Cross-Site-Scripting(XSS), clickjacking, etc.
+
+Why security of HTTP headers are important: 
+	Sometimes developers ignore the HTTP headers. Since HTTP headers can leak sensitive information about the application, therefore, it is important to use the headers in a secure way.
+
+Node-Modules included in Helmet.js are: Helmet.js comes with more built-in modules for increasing the security of the Express application.
+
+	Content-Security-Policy: It sets up the Security Policy.
+	Expect-CT: It is used for handling Certificate Transparency.
+	X-DNS-Prefetch-Control: It is used for controlling the fetching of browser DNS.
+	X-Frame-Options: It is used to prevent ClickJacking.
+	X-Powered-By: It is used to remove X-Powered-By header. X-Powered-By header leaks the version of the server and its vendor.
+	Public-Key-Pins: It is used for HTTP public key pinning.
+	Strict-Transport-Security: It is used for HTTP Strict Transport policy.
+	X-Download-Options: It restricts to various Download-Options.
+	Cache control: It is used for disabling Client-Side caching.
+	X-Content-Type-Options: It is used to prevent the Sniffing attack.
+	Referrer-Policy: It is used to hide the referrer header.
+	X-XSS-Protection: It is used to add protection to XSS attacks.
+
+
+How to inspect HTTP Header: 
+	For inspecting the header, first right-click on a page that you want to inspect. Now, click on inspect element. After that open the Network tab.
+
+Helmet helps you secure your Express apps by setting various HTTP headers.
+	Helmet version 3.21.3
+
+### Hide Potentially Dangerous Information Using helmet.hidePoweredBy()
+
+	Hackers can exploit known vulnerabilities in Express/Node if they see that your site is powered by Express. X-Powered-By: Express is sent in every request coming from Express by default. 
+		Use the helmet.hidePoweredBy() middleware to remove the X-Powered-By header.
+
+### Mitigate the Risk of Clickjacking with helmet.frameguard()
+
+	Your page could be put in a <frame> or <iframe> without your consent. This can result in clickjacking attacks, among other things. Clickjacking is a technique of tricking a user into interacting with a page different from what the user thinks it is. This can be obtained executing your page in a malicious context, by mean of iframing. In that context a hacker can put a hidden layer over your page. Hidden buttons can be used to run bad scripts. This middleware sets the X-Frame-Options header. It restricts who can put your site in a frame. We don’t need our app to be framed. 
+
+	It has three modes: DENY, SAMEORIGIN, and ALLOW-FROM.
+
+		Use helmet.frameguard() passing with the configuration object {action: 'deny'}.
+
+### Mitigate the Risk of Cross Site Scripting (XSS) Attacks with helmet.xssFilter()
+
+	Cross-site scripting (XSS) is a frequent type of attack where malicious scripts are injected into vulnerable pages, with the purpose of stealing sensitive data like session cookies, or passwords.
+
+	The basic rule to lower the risk of an XSS attack is simple: “Never trust user’s input”. As a developer you should always sanitize all the input coming from the outside. This includes data coming from forms, GET query urls, and even from POST bodies. Sanitizing means that you should find and encode the characters that may be dangerous e.g. <, >.
+
+	Modern browsers can help mitigating the risk by adopting better software strategies. Often these are configurable via http headers.
+
+	The X-XSS-Protection HTTP header is a basic protection. The browser detects a potential injected script using a heuristic filter. If the header is enabled, the browser changes the script code, neutralizing it. It still has limited support.
+
+		Use helmet.xssFilter() to sanitize input sent to your server.
+		
+### Avoid Inferring the Response MIME Type with helmet.noSniff()
+
+	Browsers can use content or MIME sniffing to override response Content-Type headers to guess and process the data using an implicit content type. While this can be convenient in some scenarios, it can also lead to some dangerous attacks. This middleware sets the X-Content-Type-Options header to nosniff, instructing the browser to not bypass the provided Content-Type.
+
+		Use the helmet.noSniff() method on your server
+		
+### Prevent IE from Opening Untrusted HTML with helmet.ieNoOpen()
+
+	Some web applications will serve untrusted HTML for download. Some versions of Internet Explorer by default open those HTML files in the context of your site. This means that an untrusted HTML page could start doing bad things in the context of your pages. This middleware sets the X-Download-Options header to noopen. This will prevent IE users from executing downloads in the trusted site’s context.
+
+		Use the helmet.ieNoOpen() method on your server.

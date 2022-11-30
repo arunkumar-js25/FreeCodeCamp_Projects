@@ -178,7 +178,8 @@ Helmet helps you secure your Express apps by setting various HTTP headers.
 	Add the function in and log the result to the console to see it working.
 	
 	
-	
+References: https://helmetjs.github.io/
+			https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
 	
 HelmetJs-Cheatsheet
 npm install helmet - To install helmet js

@@ -4,4 +4,4 @@ In this course, you'll learn about sockets, create a TCP server and client, buil
 
 1. BannerGrabber
 2. PortScanner
-3. TCP Server and Client  
+3. TCP Server and Client   

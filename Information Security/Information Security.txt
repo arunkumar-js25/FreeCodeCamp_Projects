@@ -9,7 +9,7 @@ Why security of HTTP headers are important:
 
 Node-Modules included in Helmet.js are: Helmet.js comes with more built-in modules for increasing the security of the Express application.
 
-	Content-Security-Policy: It sets up the Security Policy.
+	Content-Security-Policy: It sets up the Security Policy. 
 	Expect-CT: It is used for handling Certificate Transparency.
 	X-DNS-Prefetch-Control: It is used for controlling the fetching of browser DNS.
 	X-Frame-Options: It is used to prevent ClickJacking.

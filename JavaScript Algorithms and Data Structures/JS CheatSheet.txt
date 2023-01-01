@@ -19,7 +19,7 @@ Spread operator:
 Destructuring Assignment:
 	Destructuring assignment is special syntax introduced in ES6, for neatly assigning values taken directly from an object.
 	
-	Object:
+	Object: 
 		const user = { name: 'John Doe', age: 34 };
 		const { name, age } = user;
 	
@@ -590,3 +590,11 @@ arr.findIndex(func) //returns the first index which satisfies the func
 
 parseInt(1010,2) //convert binary into int
 String.fromCharCode(_)  //get ASCII character
+
+
+************
+To print all text values of class
+var eles = document.getElementsByClassName('jsx-2942766838 stock-name pointer desktop--only');
+for(let i=0;i<eles.length;i++){
+	console.log(eles[i].innerText);
+}
